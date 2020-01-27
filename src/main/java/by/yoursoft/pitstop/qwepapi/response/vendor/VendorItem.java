@@ -1,4 +1,4 @@
-package by.yoursoft.pitstop.qwepapi.response.vendorlist;
+package by.yoursoft.pitstop.qwepapi.response.vendor;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

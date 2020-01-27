@@ -3,17 +3,24 @@ package by.yoursoft.pitstop.qwepapi;
 import by.yoursoft.pitstop.qwepapi.exception.QwepNetworkException;
 import by.yoursoft.pitstop.qwepapi.exception.QwepTokenNotValidException;
 import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
-import by.yoursoft.pitstop.qwepapi.request.vendorlist.VendorListFilter;
-import by.yoursoft.pitstop.qwepapi.request.vendorlist.VendorListRequest;
-import by.yoursoft.pitstop.qwepapi.request.vendorlist.VendorListRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.account.add.Account;
+import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequest;
+import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListFilter;
+import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequest;
+import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequestBody;
 import by.yoursoft.pitstop.qwepapi.response.BaseResponse;
-import by.yoursoft.pitstop.qwepapi.response.vendorlist.VendorItem;
-import by.yoursoft.pitstop.qwepapi.response.vendorlist.VendorListResponse;
+import by.yoursoft.pitstop.qwepapi.response.account.add.AccountAddResponse;
+import by.yoursoft.pitstop.qwepapi.response.account.add.AccountItem;
+import by.yoursoft.pitstop.qwepapi.response.vendor.VendorItem;
+import by.yoursoft.pitstop.qwepapi.response.vendor.VendorListResponse;
 import by.yoursoft.pitstop.qwepapi.utils.RequestUtils;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.function.Supplier;
+
+import static java.util.Arrays.asList;
 
 @RequiredArgsConstructor
 public class QwepApiService {
@@ -27,6 +34,21 @@ public class QwepApiService {
         VendorListResponse vendorListResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeVendorEndpoint()::getVendorList, request));
 
         return vendorListResponse.getEntity().getVendors();
+    }
+
+    public List<AccountItem> addAccount(String vid, String bid, String login, String password, String parameters) {
+        AccountAddRequest request = new AccountAddRequest();
+        request.setRequestBody(new AccountAddRequestBody()
+                .setAccounts(asList(new Account()
+                        .setLogin(login)
+                        .setVid(vid)
+                        .setBid(bid)
+                        .setPassword(password)
+                        .setParameters(parameters))));
+
+        AccountAddResponse vendorListResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeAccountEndpoint()::addAccount, request));
+
+        return vendorListResponse.getEntity().getAccounts();
     }
 
     private <R, T extends BaseResponse<R>> T executeWithRefreshTokenIfNeed(Supplier<T> fun) {

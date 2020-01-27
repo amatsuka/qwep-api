@@ -1,4 +1,4 @@
-package by.yoursoft.pitstop.qwepapi.request.vendorlist;
+package by.yoursoft.pitstop.qwepapi.request.vendor;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

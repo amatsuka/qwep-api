@@ -3,7 +3,7 @@ package by.yoursoft.pitstop.qwepapi;
 import by.yoursoft.pitstop.qwepapi.config.BaseQwepFactoryConfig;
 import by.yoursoft.pitstop.qwepapi.config.QwepTokenStorage;
 import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
-import by.yoursoft.pitstop.qwepapi.response.vendorlist.VendorItem;
+import by.yoursoft.pitstop.qwepapi.response.vendor.VendorItem;
 import lombok.RequiredArgsConstructor;
 import okhttp3.logging.HttpLoggingInterceptor;
 

@@ -1,8 +1,8 @@
 package by.yoursoft.pitstop.qwepapi.endpoint;
 
 import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
-import by.yoursoft.pitstop.qwepapi.request.vendorlist.VendorListRequest;
-import by.yoursoft.pitstop.qwepapi.response.vendorlist.VendorListResponse;
+import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequest;
+import by.yoursoft.pitstop.qwepapi.response.vendor.VendorListResponse;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.Body;

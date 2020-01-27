@@ -1,4 +1,4 @@
-package by.yoursoft.pitstop.qwepapi.request.vendorlist;
+package by.yoursoft.pitstop.qwepapi.request.vendor;
 
 import by.yoursoft.pitstop.qwepapi.request.common.CommonFilter;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package by.yoursoft.pitstop.qwepapi.response.vendorlist;
+package by.yoursoft.pitstop.qwepapi.response.account.add;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -7,6 +7,6 @@ import java.util.List;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class VendorListResponseBody {
-   List<VendorItem> vendors;
+public class AccountAddResponseBody {
+   List<AccountItem> accounts;
 }
