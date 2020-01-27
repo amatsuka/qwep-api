@@ -19,6 +19,4 @@ public class SearchResultItem {
     private List<ClarificationItem> clarifications = new LinkedList<>();
     private List<Error> errors = new LinkedList<>();
     private List<SearchItem> items = new LinkedList<>();
-
-
 }

@@ -8,6 +8,9 @@ import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequest;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.search.SearchSort;
+import by.yoursoft.pitstop.qwepapi.request.search.status.SearchStatusRequest;
+import by.yoursoft.pitstop.qwepapi.request.search.updates.SearchUpdatesRequest;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListFilter;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequest;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequestBody;
@@ -16,6 +19,8 @@ import by.yoursoft.pitstop.qwepapi.response.account.add.AccountAddResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.add.AccountItem;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponseBody;
+import by.yoursoft.pitstop.qwepapi.response.search.status.SearchStatusResponse;
+import by.yoursoft.pitstop.qwepapi.response.search.status.SearchStatusResponseBody;
 import by.yoursoft.pitstop.qwepapi.response.vendor.VendorItem;
 import by.yoursoft.pitstop.qwepapi.response.vendor.VendorListResponse;
 import by.yoursoft.pitstop.qwepapi.utils.RequestUtils;
@@ -64,7 +69,30 @@ public class QwepApiService {
         return searchResponse.getEntity();
     }
 
-    //TODO заменить на отдельный класс билдера что бы не светить SearchRequestBody
+    public SearchResponseBody searchUpdates(String searchId, List<SearchSort> sorts) {
+        SearchUpdatesRequest request = new SearchUpdatesRequest();
+
+        SearchResponse searchResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeSearchEndpoint()::searchUpdates, request));
+
+        return searchResponse.getEntity();
+    }
+
+    public SearchResponseBody searchResults(String searchId, List<SearchSort> sorts) {
+        SearchUpdatesRequest request = new SearchUpdatesRequest();
+
+        SearchResponse searchResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeSearchEndpoint()::searchResults, request));
+
+        return searchResponse.getEntity();
+    }
+
+    public SearchStatusResponseBody searchStatus(String searchId) {
+        SearchStatusRequest request = new SearchStatusRequest();
+
+        SearchStatusResponse searchStatusResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeSearchEndpoint()::searchStatus, request));
+
+        return searchStatusResponse.getEntity();
+    }
+
     public SearchRequestBuilder searchRequestBuilder() {
         return new SearchRequestBuilder();
     }

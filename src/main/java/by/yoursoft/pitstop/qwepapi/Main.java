@@ -13,6 +13,7 @@ import by.yoursoft.pitstop.qwepapi.response.vendor.VendorItem;
 import lombok.RequiredArgsConstructor;
 import okhttp3.logging.HttpLoggingInterceptor;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -35,9 +36,6 @@ public class Main {
 
         QwepApiFactory qwepApiFactory = new QwepApiFactory(baseQwepFactoryConfig);
         QwepApiService qwepApiService = new QwepApiService(qwepApiFactory);
-
-        //vendorList(qwepApiService);
-        //search(qwepApiService);
     }
 
     public static void vendorList(QwepApiService qwepApiService) {
@@ -54,6 +52,18 @@ public class Main {
                         .setOrder(ESearchSortOrder.ASC)));
 
         SearchResponseBody search = qwepApiService.search(builder);
+    }
+
+    public static void searchUpdates(QwepApiService qwepApiService, String searchId) {
+        qwepApiService.searchUpdates(searchId, new LinkedList<>());
+    }
+
+    public static void searchResults(QwepApiService qwepApiService, String searchId) {
+        qwepApiService.searchResults(searchId, new LinkedList<>());
+    }
+
+    public static void searchStatus(QwepApiService qwepApiService, String searchId) {
+        qwepApiService.searchStatus(searchId);
     }
 
     @RequiredArgsConstructor
