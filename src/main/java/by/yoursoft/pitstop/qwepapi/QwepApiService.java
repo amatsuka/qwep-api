@@ -6,12 +6,16 @@ import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
 import by.yoursoft.pitstop.qwepapi.request.account.add.Account;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequest;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.search.SearchRequest;
+import by.yoursoft.pitstop.qwepapi.request.search.SearchRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListFilter;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequest;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequestBody;
 import by.yoursoft.pitstop.qwepapi.response.BaseResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.add.AccountAddResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.add.AccountItem;
+import by.yoursoft.pitstop.qwepapi.response.search.SearchResponse;
+import by.yoursoft.pitstop.qwepapi.response.search.SearchResponseBody;
 import by.yoursoft.pitstop.qwepapi.response.vendor.VendorItem;
 import by.yoursoft.pitstop.qwepapi.response.vendor.VendorListResponse;
 import by.yoursoft.pitstop.qwepapi.utils.RequestUtils;
@@ -49,6 +53,20 @@ public class QwepApiService {
         AccountAddResponse vendorListResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeAccountEndpoint()::addAccount, request));
 
         return vendorListResponse.getEntity().getAccounts();
+    }
+
+    public SearchResponseBody search(SearchRequestBuilder requestBuilder) {
+        SearchRequest request = new SearchRequest();
+        request.setRequestBody(requestBuilder.build());
+
+        SearchResponse searchResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeSearchEndpoint()::search, request));
+
+        return searchResponse.getEntity();
+    }
+
+    //TODO заменить на отдельный класс билдера что бы не светить SearchRequestBody
+    public SearchRequestBuilder searchRequestBuilder() {
+        return new SearchRequestBuilder();
     }
 
     private <R, T extends BaseResponse<R>> T executeWithRefreshTokenIfNeed(Supplier<T> fun) {

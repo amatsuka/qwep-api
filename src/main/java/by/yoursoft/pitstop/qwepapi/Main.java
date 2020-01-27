@@ -3,6 +3,12 @@ package by.yoursoft.pitstop.qwepapi;
 import by.yoursoft.pitstop.qwepapi.config.BaseQwepFactoryConfig;
 import by.yoursoft.pitstop.qwepapi.config.QwepTokenStorage;
 import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
+import by.yoursoft.pitstop.qwepapi.request.search.ESearchSortOrder;
+import by.yoursoft.pitstop.qwepapi.request.search.ESearchSortType;
+import by.yoursoft.pitstop.qwepapi.request.search.SearchRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.search.SearchSort;
+import by.yoursoft.pitstop.qwepapi.response.account.add.AccountItem;
+import by.yoursoft.pitstop.qwepapi.response.search.SearchResponseBody;
 import by.yoursoft.pitstop.qwepapi.response.vendor.VendorItem;
 import lombok.RequiredArgsConstructor;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -28,10 +34,26 @@ public class Main {
                 .setHttpInterceptors(asList(new HttpLoggingInterceptor()));
 
         QwepApiFactory qwepApiFactory = new QwepApiFactory(baseQwepFactoryConfig);
-
         QwepApiService qwepApiService = new QwepApiService(qwepApiFactory);
 
+        //vendorList(qwepApiService);
+        //search(qwepApiService);
+    }
+
+    public static void vendorList(QwepApiService qwepApiService) {
         List<VendorItem> vendorList = qwepApiService.getVendorList();
+    }
+
+    public static void search(QwepApiService qwepApiService) {
+        SearchRequestBuilder builder = qwepApiService.searchRequestBuilder()
+                .article("01244")
+                .brand("Febi")
+                .sorts(asList(new SearchSort()
+                        .setSort("article")
+                        .setType(ESearchSortType.ITEMS)
+                        .setOrder(ESearchSortOrder.ASC)));
+
+        SearchResponseBody search = qwepApiService.search(builder);
     }
 
     @RequiredArgsConstructor

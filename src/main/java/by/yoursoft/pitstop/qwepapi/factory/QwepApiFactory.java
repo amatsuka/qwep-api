@@ -2,6 +2,7 @@ package by.yoursoft.pitstop.qwepapi.factory;
 
 import by.yoursoft.pitstop.qwepapi.config.AbstractQwepFactoryConfig;
 import by.yoursoft.pitstop.qwepapi.endpoint.AccountEndpoint;
+import by.yoursoft.pitstop.qwepapi.endpoint.SearchEndpoint;
 import by.yoursoft.pitstop.qwepapi.endpoint.VendorEndpoint;
 import lombok.Getter;
 import retrofit2.Retrofit;
@@ -27,6 +28,10 @@ public class QwepApiFactory {
 
     public AccountEndpoint makeAccountEndpoint() {
         return new AccountEndpoint(this);
+    }
+
+    public SearchEndpoint makeSearchEndpoint() {
+        return new SearchEndpoint(this);
     }
 
 }
