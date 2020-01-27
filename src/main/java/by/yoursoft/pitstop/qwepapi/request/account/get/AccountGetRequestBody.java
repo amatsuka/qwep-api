@@ -1,4 +1,4 @@
-package by.yoursoft.pitstop.qwepapi.request.account.add;
+package by.yoursoft.pitstop.qwepapi.request.account.get;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
@@ -9,6 +9,6 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 @JsonRootName("Request")
-public class AccountAddRequestBody {
-    private List<AccountAdd> accounts;
+public class AccountGetRequestBody {
+    private List<AccountGet> accounts;
 }
