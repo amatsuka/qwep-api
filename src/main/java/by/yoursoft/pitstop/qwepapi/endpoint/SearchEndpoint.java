@@ -3,10 +3,12 @@ package by.yoursoft.pitstop.qwepapi.endpoint;
 import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchRequest;
+import by.yoursoft.pitstop.qwepapi.request.search.presearch.PreSearchRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.status.SearchStatusRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.updates.SearchUpdatesRequest;
 import by.yoursoft.pitstop.qwepapi.response.account.add.AccountAddResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponse;
+import by.yoursoft.pitstop.qwepapi.response.search.presearch.PreSearchResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.status.SearchStatusResponse;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -35,6 +37,9 @@ public class SearchEndpoint extends BaseEndpoint {
 
         @POST("/search/status")
         Call<SearchStatusResponse> searchStatus(@HeaderMap Map<String, String> headers, @Body SearchStatusRequest body);
+
+        @POST("/preSearch")
+        Call<PreSearchResponse> preSearch(@HeaderMap Map<String, String> headers, @Body PreSearchRequest body);
     }
 
     public Response<SearchResponse> search(SearchRequest request) throws IOException {
@@ -71,5 +76,14 @@ public class SearchEndpoint extends BaseEndpoint {
         headers.put("Authorization", "Bearer " + getToken());
 
         return service.searchStatus(headers, request).execute();
+    }
+
+    public Response<PreSearchResponse> preSearch(PreSearchRequest request) throws IOException {
+        SearchService service = getFactory().getHttpClient().create(SearchService.class);
+
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + getToken());
+
+        return service.preSearch(headers, request).execute();
     }
 }

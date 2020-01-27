@@ -6,9 +6,11 @@ import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
 import by.yoursoft.pitstop.qwepapi.request.account.add.Account;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequest;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.common.CommonFilter;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchSort;
+import by.yoursoft.pitstop.qwepapi.request.search.presearch.PreSearchRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.status.SearchStatusRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.updates.SearchUpdatesRequest;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListFilter;
@@ -19,6 +21,8 @@ import by.yoursoft.pitstop.qwepapi.response.account.add.AccountAddResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.add.AccountItem;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponseBody;
+import by.yoursoft.pitstop.qwepapi.response.search.presearch.PreSearchResponse;
+import by.yoursoft.pitstop.qwepapi.response.search.presearch.ShortNumber;
 import by.yoursoft.pitstop.qwepapi.response.search.status.SearchStatusResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.status.SearchStatusResponseBody;
 import by.yoursoft.pitstop.qwepapi.response.vendor.VendorItem;
@@ -91,6 +95,15 @@ public class QwepApiService {
         SearchStatusResponse searchStatusResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeSearchEndpoint()::searchStatus, request));
 
         return searchStatusResponse.getEntity();
+    }
+
+
+    public List<ShortNumber> preSearch(String article, List<CommonFilter> accounts, List<CommonFilter> vendors) {
+        PreSearchRequest request = new PreSearchRequest();
+
+        PreSearchResponse preSearchResponse  = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeSearchEndpoint()::preSearch, request));
+
+        return preSearchResponse.getEntity().getShortNumbers();
     }
 
     public SearchRequestBuilder searchRequestBuilder() {

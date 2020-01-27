@@ -66,6 +66,10 @@ public class Main {
         qwepApiService.searchStatus(searchId);
     }
 
+    public static void preSearch(QwepApiService qwepApiService) {
+        qwepApiService.preSearch("a12345", new LinkedList<>(), new LinkedList<>());
+    }
+
     @RequiredArgsConstructor
     public static class StubStorage implements QwepTokenStorage {
 
