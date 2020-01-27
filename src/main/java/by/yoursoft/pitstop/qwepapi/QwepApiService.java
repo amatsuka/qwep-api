@@ -3,7 +3,7 @@ package by.yoursoft.pitstop.qwepapi;
 import by.yoursoft.pitstop.qwepapi.exception.QwepNetworkException;
 import by.yoursoft.pitstop.qwepapi.exception.QwepTokenNotValidException;
 import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
-import by.yoursoft.pitstop.qwepapi.request.account.add.Account;
+import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAdd;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequest;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.common.CommonFilter;
@@ -13,18 +13,25 @@ import by.yoursoft.pitstop.qwepapi.request.search.SearchSort;
 import by.yoursoft.pitstop.qwepapi.request.search.presearch.PreSearchRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.status.SearchStatusRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.updates.SearchUpdatesRequest;
+import by.yoursoft.pitstop.qwepapi.request.account.delete.AccountDeleteRequest;
+import by.yoursoft.pitstop.qwepapi.request.account.delete.AccountDeleteRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.account.get.AccountGetRequest;
+import by.yoursoft.pitstop.qwepapi.request.account.get.AccountGetRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.common.CommonNumFilter;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListFilter;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequest;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequestBody;
 import by.yoursoft.pitstop.qwepapi.response.BaseResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.add.AccountAddResponse;
-import by.yoursoft.pitstop.qwepapi.response.account.add.AccountItem;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponseBody;
 import by.yoursoft.pitstop.qwepapi.response.search.presearch.PreSearchResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.presearch.ShortNumber;
 import by.yoursoft.pitstop.qwepapi.response.search.status.SearchStatusResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.status.SearchStatusResponseBody;
+import by.yoursoft.pitstop.qwepapi.response.account.delete.AccountDeleteResponse;
+import by.yoursoft.pitstop.qwepapi.response.account.get.AccountGetResponse;
+import by.yoursoft.pitstop.qwepapi.response.common.AccountItem;
 import by.yoursoft.pitstop.qwepapi.response.vendor.VendorItem;
 import by.yoursoft.pitstop.qwepapi.response.vendor.VendorListResponse;
 import by.yoursoft.pitstop.qwepapi.utils.RequestUtils;
@@ -52,7 +59,7 @@ public class QwepApiService {
     public List<AccountItem> addAccount(String vid, String bid, String login, String password, String parameters) {
         AccountAddRequest request = new AccountAddRequest();
         request.setRequestBody(new AccountAddRequestBody()
-                .setAccounts(asList(new Account()
+                .setAccounts(asList(new AccountAdd()
                         .setLogin(login)
                         .setVid(vid)
                         .setBid(bid)
@@ -108,6 +115,27 @@ public class QwepApiService {
 
     public SearchRequestBuilder searchRequestBuilder() {
         return new SearchRequestBuilder();
+    }
+
+    public List<AccountItem> getAccount(boolean promo, boolean enabled){
+        AccountGetRequest request = new AccountGetRequest();
+        request.setRequestBody(new AccountGetRequestBody()
+                .setPromo(promo)
+                .setEnabled(enabled));
+
+        AccountGetResponse accountListResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeAccountEndpoint()::getAccount, request));
+
+        return accountListResponse.getEntity().getAccounts();
+    }
+
+    public List<AccountItem> deleteAccount(Long id){
+        AccountDeleteRequest request = new AccountDeleteRequest();
+        request.setRequestBody(new AccountDeleteRequestBody()
+            .setAccounts(asList(new CommonNumFilter()
+                .setId(id))));
+        AccountDeleteResponse accountListResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeAccountEndpoint()::deleteAccount, request));
+
+        return accountListResponse.getEntity().getAccounts();
     }
 
     private <R, T extends BaseResponse<R>> T executeWithRefreshTokenIfNeed(Supplier<T> fun) {

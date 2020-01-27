@@ -1,4 +1,4 @@
-package by.yoursoft.pitstop.qwepapi.response.account.add;
+package by.yoursoft.pitstop.qwepapi.response.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -10,4 +10,6 @@ public class AccountItem {
     private String vid;
     private String bid;
     private String login;
+    private boolean promo;
+    private boolean enabled;
 }

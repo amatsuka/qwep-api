@@ -5,7 +5,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class Account {
+public class AccountAdd {
     private String vid;
     private String bid;
     private String login;

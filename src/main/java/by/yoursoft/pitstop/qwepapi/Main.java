@@ -7,9 +7,9 @@ import by.yoursoft.pitstop.qwepapi.request.search.ESearchSortOrder;
 import by.yoursoft.pitstop.qwepapi.request.search.ESearchSortType;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchSort;
-import by.yoursoft.pitstop.qwepapi.response.account.add.AccountItem;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponseBody;
 import by.yoursoft.pitstop.qwepapi.response.vendor.VendorItem;
+import by.yoursoft.pitstop.qwepapi.response.common.AccountItem;
 import lombok.RequiredArgsConstructor;
 import okhttp3.logging.HttpLoggingInterceptor;
 
@@ -70,6 +70,7 @@ public class Main {
         qwepApiService.preSearch("a12345", new LinkedList<>(), new LinkedList<>());
     }
 
+    //TODO добавить вызовы API аккаунтов
     @RequiredArgsConstructor
     public static class StubStorage implements QwepTokenStorage {
 
