@@ -3,9 +3,7 @@ package by.yoursoft.pitstop.qwepapi;
 import by.yoursoft.pitstop.qwepapi.config.BaseQwepFactoryConfig;
 import by.yoursoft.pitstop.qwepapi.config.QwepTokenStorage;
 import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
-import by.yoursoft.pitstop.qwepapi.request.account.get.AccountGet;
 import by.yoursoft.pitstop.qwepapi.response.common.AccountItem;
-import by.yoursoft.pitstop.qwepapi.response.vendor.VendorItem;
 import lombok.RequiredArgsConstructor;
 import okhttp3.logging.HttpLoggingInterceptor;
 
@@ -35,7 +33,7 @@ public class Main {
 
         //List<VendorItem> vendorList = qwepApiService.getVendorList();
         List<AccountItem> accountGetList = qwepApiService.getAccount(false, false);
-       // List<AccountItem> accountDelList = qwepApiService.delAccount((long) 1176695);
+       // List<AccountItem> accountDelList = qwepApiService.deleteAccount((long) 1176695);
     }
 
     @RequiredArgsConstructor

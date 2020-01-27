@@ -6,18 +6,18 @@ import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAdd;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequest;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequestBody;
-import by.yoursoft.pitstop.qwepapi.request.account.del.AccountDel;
-import by.yoursoft.pitstop.qwepapi.request.account.del.AccountDelRequest;
-import by.yoursoft.pitstop.qwepapi.request.account.del.AccountDelRequestBody;
-import by.yoursoft.pitstop.qwepapi.request.account.get.AccountGet;
+import by.yoursoft.pitstop.qwepapi.request.account.delete.AccountDeleteRequest;
+import by.yoursoft.pitstop.qwepapi.request.account.delete.AccountDeleteRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.account.get.AccountGetRequest;
 import by.yoursoft.pitstop.qwepapi.request.account.get.AccountGetRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.common.CommonFilter;
+import by.yoursoft.pitstop.qwepapi.request.common.CommonNumFilter;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListFilter;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequest;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequestBody;
 import by.yoursoft.pitstop.qwepapi.response.BaseResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.add.AccountAddResponse;
-import by.yoursoft.pitstop.qwepapi.response.account.del.AccountDelResponse;
+import by.yoursoft.pitstop.qwepapi.response.account.delete.AccountDeleteResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.get.AccountGetResponse;
 import by.yoursoft.pitstop.qwepapi.response.common.AccountItem;
 import by.yoursoft.pitstop.qwepapi.response.vendor.VendorItem;
@@ -62,21 +62,20 @@ public class QwepApiService {
     public List<AccountItem> getAccount(boolean promo, boolean enabled){
         AccountGetRequest request = new AccountGetRequest();
         request.setRequestBody(new AccountGetRequestBody()
-            .setAccounts(asList(new AccountGet()
                 .setPromo(promo)
-                .setEnabled(enabled))));
+                .setEnabled(enabled));
 
         AccountGetResponse accountListResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeAccountEndpoint()::getAccount, request));
 
         return accountListResponse.getEntity().getAccounts();
     }
 
-    public List<AccountItem> delAccount(Long id){
-        AccountDelRequest request = new AccountDelRequest();
-        request.setRequestBody(new AccountDelRequestBody()
-            .setAccounts(asList(new AccountDel()
+    public List<AccountItem> deleteAccount(Long id){
+        AccountDeleteRequest request = new AccountDeleteRequest();
+        request.setRequestBody(new AccountDeleteRequestBody()
+            .setAccounts(asList(new CommonNumFilter()
                 .setId(id))));
-        AccountDelResponse accountListResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeAccountEndpoint()::delAccount, request));
+        AccountDeleteResponse accountListResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeAccountEndpoint()::deleteAccount, request));
 
         return accountListResponse.getEntity().getAccounts();
     }
