@@ -6,6 +6,8 @@ import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAdd;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequest;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.basket.clear.ClearBasketRequest;
+import by.yoursoft.pitstop.qwepapi.request.basket.clear.ClearBasketRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.common.CommonFilter;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchSort;
@@ -27,6 +29,7 @@ import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequestBody;
 import by.yoursoft.pitstop.qwepapi.response.BaseResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.add.AccountAddResponse;
 import by.yoursoft.pitstop.qwepapi.response.basket.add.BasketAddResponseBody;
+import by.yoursoft.pitstop.qwepapi.response.common.StatusResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponseBody;
 import by.yoursoft.pitstop.qwepapi.response.search.presearch.PreSearchResponse;
@@ -163,6 +166,17 @@ public class QwepApiService {
         BasketAddResponse basketListResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeBasketEndpoint()::addBasket, request));
 
         return basketListResponse.getEntity();
+    }
+
+    public boolean clearBasket(Long accountId, Long basketId) {
+        ClearBasketRequest request = new ClearBasketRequest();
+        request.setRequestBody(new ClearBasketRequestBody()
+                .setAccountId(accountId)
+                .setBasketId(basketId));
+
+        StatusResponse statusResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeBasketEndpoint()::clearBasket, request));
+
+        return statusResponse.getEntity().isStatus();
     }
 
     private <R, T extends BaseResponse<R>> T executeWithRefreshTokenIfNeed(Supplier<T> fun) {
