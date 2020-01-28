@@ -16,7 +16,7 @@ public class SearchRequestBody {
 
     private String brand;
 
-    private Long timeout = 10000L;
+    private Long timeout = 10_000L;
 
     private String clarification;
 

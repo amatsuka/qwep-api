@@ -12,7 +12,7 @@ import java.util.List;
 @Accessors(chain = true)
 @JsonRootName("Response")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public abstract class BaseResponse<T> {
+public abstract class AbstractResponse<T> {
     @JsonProperty("entity")
     private T entity;
 

@@ -1,10 +1,10 @@
 package by.yoursoft.pitstop.qwepapi.response.token;
 
-import by.yoursoft.pitstop.qwepapi.response.BaseResponse;
+import by.yoursoft.pitstop.qwepapi.response.AbstractResponse;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName("Response")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TokenResponse extends BaseResponse<TokenResponseBody> {
+public class TokenResponse extends AbstractResponse<TokenResponseBody> {
 }

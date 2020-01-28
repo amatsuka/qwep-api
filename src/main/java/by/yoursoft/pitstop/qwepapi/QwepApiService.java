@@ -29,7 +29,7 @@ import by.yoursoft.pitstop.qwepapi.request.basket.add.BasketAddRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListFilter;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequest;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequestBody;
-import by.yoursoft.pitstop.qwepapi.response.BaseResponse;
+import by.yoursoft.pitstop.qwepapi.response.AbstractResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.add.AccountAddResponse;
 import by.yoursoft.pitstop.qwepapi.response.basket.add.BasketAddResponseBody;
 import by.yoursoft.pitstop.qwepapi.response.basket.list.BasketListResponse;
@@ -209,7 +209,7 @@ public class QwepApiService {
         return response.getEntity().getBaskets();
     }
 
-    private <R, T extends BaseResponse<R>> T executeWithRefreshTokenIfNeed(Supplier<T> fun) {
+    private <R, T extends AbstractResponse<R>> T executeWithRefreshTokenIfNeed(Supplier<T> fun) {
         try {
             return fun.get();
 

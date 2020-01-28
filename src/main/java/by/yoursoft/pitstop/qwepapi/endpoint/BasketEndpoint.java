@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BasketEndpoint extends BaseEndpoint{
+public class BasketEndpoint extends AbstractEndpoint {
     public BasketEndpoint (QwepApiFactory factory) {super(factory); }
 
     private interface BasketService{

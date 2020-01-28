@@ -18,7 +18,7 @@ import retrofit2.http.POST;
 import java.io.IOException;
 
 @RequiredArgsConstructor
-abstract class BaseEndpoint {
+abstract class AbstractEndpoint {
 
     @Getter
     private final QwepApiFactory factory;
@@ -30,8 +30,8 @@ abstract class BaseEndpoint {
                 tokenStorage.removeToken();
                 tokenStorage.setToken(requestToken());
 
-            } catch (IOException | QwepNetworkException e) {
-                throw new QwepNetworkException("qwep.connection.token-error");
+            } catch (IOException | QwepNetworkException ex) {
+                throw new QwepNetworkException("qwep.connection.token-error", ex);
             }
         }
 
@@ -58,11 +58,11 @@ abstract class BaseEndpoint {
 
         Response<TokenResponse> response = createTokenRequest(request).execute();
 
-        TokenResponse body = response.body();
-
         if (!response.isSuccessful()) {
             throw new QwepNetworkException("qwep.connection.error: " + response.code() + " " + response.message());
         }
+
+        TokenResponse body = response.body();
 
         if (body == null) {
             throw new QwepNetworkException("qwep.connection.error");

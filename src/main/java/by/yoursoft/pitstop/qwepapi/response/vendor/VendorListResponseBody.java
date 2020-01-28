@@ -8,5 +8,5 @@ import java.util.List;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class VendorListResponseBody {
-   List<VendorItem> vendors;
+   private List<VendorItem> vendors;
 }

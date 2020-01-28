@@ -13,7 +13,7 @@ public class SearchRequestBuilder {
 
     private String brand;
 
-    private Long timeout = 10000L;
+    private Long timeout = 10_000L;
 
     private String clarification;
 
@@ -29,7 +29,7 @@ public class SearchRequestBuilder {
 
     private List<SearchSort> sorts = new LinkedList<>();
 
-    SearchRequestBuilder() {
+    /* default */ SearchRequestBuilder() {
     }
 
     public SearchRequestBuilder article(String article) {
@@ -92,6 +92,7 @@ public class SearchRequestBuilder {
                 .setAccounts(accounts)
                 .setVendors(vendors)
                 .setType(type)
-                .setSorts(sorts);
+                .setSorts(sorts)
+                .setTimeout(timeout);
     }
 }

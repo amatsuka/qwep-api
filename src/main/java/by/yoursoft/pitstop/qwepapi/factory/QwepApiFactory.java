@@ -1,6 +1,6 @@
 package by.yoursoft.pitstop.qwepapi.factory;
 
-import by.yoursoft.pitstop.qwepapi.config.AbstractQwepFactoryConfig;
+import by.yoursoft.pitstop.qwepapi.config.BaseQwepFactoryConfig;
 import by.yoursoft.pitstop.qwepapi.endpoint.AccountEndpoint;
 import by.yoursoft.pitstop.qwepapi.endpoint.BasketEndpoint;
 import by.yoursoft.pitstop.qwepapi.endpoint.SearchEndpoint;
@@ -12,9 +12,9 @@ public class QwepApiFactory {
     private final RetrofitFactory retrofitFactory;
 
     @Getter
-    private final AbstractQwepFactoryConfig config;
+    private final BaseQwepFactoryConfig config;
 
-    public QwepApiFactory(AbstractQwepFactoryConfig config) {
+    public QwepApiFactory(BaseQwepFactoryConfig config) {
         this.config = config;
         this.retrofitFactory = new RetrofitFactory(config.getBaseUrl(), config.getHttpInterceptors());
     }

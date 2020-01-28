@@ -32,7 +32,7 @@ public final class HttpUtils {
         };
     }
 
-    private static SSLSocketFactory makeSslSocketFactory(TrustManager[] trustAllCerts) throws NoSuchAlgorithmException, KeyManagementException {
+    private static SSLSocketFactory makeSslSocketFactory(TrustManager ...trustAllCerts) throws NoSuchAlgorithmException, KeyManagementException {
         final SSLContext sslContext = SSLContext.getInstance("SSL");
         sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
 

@@ -9,5 +9,5 @@ import java.util.List;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AccountDeleteResponseBody {
-    List<AccountItem> accounts;
+    private List<AccountItem> accounts;
 }

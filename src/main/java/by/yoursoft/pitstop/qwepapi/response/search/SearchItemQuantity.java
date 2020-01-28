@@ -2,8 +2,6 @@ package by.yoursoft.pitstop.qwepapi.response.search;
 
 import lombok.Data;
 
-import java.math.BigDecimal;
-
 @Data
 public class SearchItemQuantity {
     private String sign;

@@ -3,7 +3,6 @@ package by.yoursoft.pitstop.qwepapi.response.search;
 import by.yoursoft.pitstop.qwepapi.response.Error;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import org.omg.CORBA.PRIVATE_MEMBER;
 
 import java.util.LinkedList;
 import java.util.List;

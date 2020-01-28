@@ -3,7 +3,7 @@ package by.yoursoft.pitstop.qwepapi.utils;
 import by.yoursoft.pitstop.qwepapi.exception.QwepBadResponseException;
 import by.yoursoft.pitstop.qwepapi.exception.QwepNetworkException;
 import by.yoursoft.pitstop.qwepapi.exception.QwepTokenNotValidException;
-import by.yoursoft.pitstop.qwepapi.response.BaseResponse;
+import by.yoursoft.pitstop.qwepapi.response.AbstractResponse;
 import by.yoursoft.pitstop.qwepapi.response.Error;
 import retrofit2.Response;
 
@@ -29,13 +29,13 @@ public class RequestUtils {
         return errors.stream().anyMatch(__ -> __.getCode() == errorCode);
     }
 
-    private static <R, T extends BaseResponse<R>> T handleResponse(Response<T> response) throws IOException {
+    private static <R, T extends AbstractResponse<R>> T handleResponse(Response<T> response) throws IOException {
         if (!response.isSuccessful()) {
             throw new QwepNetworkException("qwep.connection.error: " + response.code() + " " + response.message());
         }
 
         if (response.body() != null) {
-            BaseResponse<R> responseBody = response.body();
+            AbstractResponse<R> responseBody = response.body();
 
             if (hasErrorCode(responseBody.getErrors(), 103L)) {
                 throw new QwepTokenNotValidException(makeErrorMessage(responseBody.getErrors()));
@@ -51,7 +51,7 @@ public class RequestUtils {
         return null;
     }
 
-    public static <Q, T extends BaseResponse<Q>, R> T execute(ThrowingIOExceptionFunction<R, Response<T>> executor, R request) {
+    public static <Q, T extends AbstractResponse<Q>, R> T execute(ThrowingIOExceptionFunction<R, Response<T>> executor, R request) {
         try {
             return handleResponse(executor.apply(request));
         } catch (IOException e) {
@@ -59,7 +59,7 @@ public class RequestUtils {
         }
     }
 
-    public static <Q, T extends BaseResponse<Q>> T execute(ThrowingIOExceptionSupplier<Response<T>> executor) {
+    public static <Q, T extends AbstractResponse<Q>> T execute(ThrowingIOExceptionSupplier<Response<T>> executor) {
         try {
             return handleResponse(executor.get());
         } catch (IOException e) {

@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AccountEndpoint extends BaseEndpoint {
+public class AccountEndpoint extends AbstractEndpoint {
     public AccountEndpoint(QwepApiFactory factory) {
         super(factory);
     }

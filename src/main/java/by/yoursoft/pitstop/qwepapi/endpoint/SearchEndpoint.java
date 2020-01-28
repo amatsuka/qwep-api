@@ -1,13 +1,11 @@
 package by.yoursoft.pitstop.qwepapi.endpoint;
 
 import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
-import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.clarification.OpenClarificationRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.presearch.PreSearchRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.status.SearchStatusRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.updates.SearchUpdatesRequest;
-import by.yoursoft.pitstop.qwepapi.response.account.add.AccountAddResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.presearch.PreSearchResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.status.SearchStatusResponse;
@@ -21,7 +19,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SearchEndpoint extends BaseEndpoint {
+public class SearchEndpoint extends AbstractEndpoint {
     public SearchEndpoint(QwepApiFactory factory) {
         super(factory);
     }

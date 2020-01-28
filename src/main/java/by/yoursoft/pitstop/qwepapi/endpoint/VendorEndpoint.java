@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VendorEndpoint extends BaseEndpoint {
+public class VendorEndpoint extends AbstractEndpoint {
     public VendorEndpoint(QwepApiFactory factory) {
         super(factory);
     }
