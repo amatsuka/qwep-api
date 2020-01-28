@@ -11,5 +11,8 @@ import java.util.List;
 @Accessors(chain = true)
 @JsonRootName("Request")
 public class BasketAddRequestBody {
-    private List<BasketAdd> baskets;
+    private int itemId;
+    private int quantity;
+    private String comment;
+    private int type = 0;
 }

@@ -8,7 +8,6 @@ import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequest;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.common.CommonFilter;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchRequest;
-import by.yoursoft.pitstop.qwepapi.request.search.SearchRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchSort;
 import by.yoursoft.pitstop.qwepapi.request.search.clarification.OpenClarificationRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.clarification.OpenClarificationRequestBody;
@@ -19,7 +18,6 @@ import by.yoursoft.pitstop.qwepapi.request.account.delete.AccountDeleteRequest;
 import by.yoursoft.pitstop.qwepapi.request.account.delete.AccountDeleteRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.account.get.AccountGetRequest;
 import by.yoursoft.pitstop.qwepapi.request.account.get.AccountGetRequestBody;
-import by.yoursoft.pitstop.qwepapi.request.basket.add.BasketAdd;
 import by.yoursoft.pitstop.qwepapi.request.basket.add.BasketAddRequest;
 import by.yoursoft.pitstop.qwepapi.request.basket.add.BasketAddRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.common.CommonNumFilter;
@@ -28,6 +26,7 @@ import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequest;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequestBody;
 import by.yoursoft.pitstop.qwepapi.response.BaseResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.add.AccountAddResponse;
+import by.yoursoft.pitstop.qwepapi.response.basket.add.BasketAddResponseBody;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponseBody;
 import by.yoursoft.pitstop.qwepapi.response.search.presearch.PreSearchResponse;
@@ -37,7 +36,6 @@ import by.yoursoft.pitstop.qwepapi.response.search.status.SearchStatusResponseBo
 import by.yoursoft.pitstop.qwepapi.response.account.delete.AccountDeleteResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.get.AccountGetResponse;
 import by.yoursoft.pitstop.qwepapi.response.basket.add.BasketAddResponse;
-import by.yoursoft.pitstop.qwepapi.response.basket.add.BasketItem;
 import by.yoursoft.pitstop.qwepapi.response.common.AccountItem;
 import by.yoursoft.pitstop.qwepapi.response.vendor.VendorItem;
 import by.yoursoft.pitstop.qwepapi.response.vendor.VendorListResponse;
@@ -154,18 +152,17 @@ public class QwepApiService {
         return accountListResponse.getEntity().getAccounts();
     }
 
-    public List<BasketItem> addBasket(Long itemId, int quantity, String comment, int type) {
+    public BasketAddResponseBody addBasket(int itemId, int quantity, String comment, int type) {
         BasketAddRequest request = new BasketAddRequest();
         request.setRequestBody(new BasketAddRequestBody()
-            .setBaskets(asList(new BasketAdd()
                 .setItemId(itemId)
                 .setQuantity(quantity)
                 .setComment(comment)
-                .setType(type))));
+                .setType(type));
 
         BasketAddResponse basketListResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeBasketEndpoint()::addBasket, request));
 
-        return basketListResponse.getEntity().getBaskets();
+        return basketListResponse.getEntity();
     }
 
     private <R, T extends BaseResponse<R>> T executeWithRefreshTokenIfNeed(Supplier<T> fun) {

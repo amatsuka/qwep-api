@@ -30,7 +30,7 @@ public class AccountEndpoint extends BaseEndpoint {
         Call<AccountGetResponse> getAccount(@HeaderMap Map<String, String> headers, @Body AccountGetRequest body);
 
         @POST("/accounts/delete")
-        Call<AccountDeleteResponse> deleleAccount(@HeaderMap Map<String, String> headers, @Body AccountDeleteRequest body);
+        Call<AccountDeleteResponse> deleteAccount(@HeaderMap Map<String, String> headers, @Body AccountDeleteRequest body);
     }
 
     public Response<AccountAddResponse> addAccount(AccountAddRequest request) throws IOException {
@@ -57,7 +57,7 @@ public class AccountEndpoint extends BaseEndpoint {
         HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + getToken());
 
-        return service.deleleAccount(headers, request).execute();
+        return service.deleteAccount(headers, request).execute();
     }
 
 }

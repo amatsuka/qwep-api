@@ -5,11 +5,10 @@ import by.yoursoft.pitstop.qwepapi.config.QwepTokenStorage;
 import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
 import by.yoursoft.pitstop.qwepapi.request.search.ESearchSortOrder;
 import by.yoursoft.pitstop.qwepapi.request.search.ESearchSortType;
-import by.yoursoft.pitstop.qwepapi.request.search.SearchRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchSort;
+import by.yoursoft.pitstop.qwepapi.response.basket.add.BasketAddResponseBody;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponseBody;
 import by.yoursoft.pitstop.qwepapi.response.vendor.VendorItem;
-import by.yoursoft.pitstop.qwepapi.response.common.AccountItem;
 import lombok.RequiredArgsConstructor;
 import okhttp3.logging.HttpLoggingInterceptor;
 
@@ -37,6 +36,7 @@ public class Main {
         QwepApiFactory qwepApiFactory = new QwepApiFactory(baseQwepFactoryConfig);
         QwepApiService qwepApiService = new QwepApiService(qwepApiFactory);
     }
+
 
     public static void vendorList(QwepApiService qwepApiService) {
         List<VendorItem> vendorList = qwepApiService.getVendorList();
