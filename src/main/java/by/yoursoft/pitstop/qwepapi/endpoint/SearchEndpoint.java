@@ -3,6 +3,7 @@ package by.yoursoft.pitstop.qwepapi.endpoint;
 import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchRequest;
+import by.yoursoft.pitstop.qwepapi.request.search.clarification.OpenClarificationRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.presearch.PreSearchRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.status.SearchStatusRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.updates.SearchUpdatesRequest;
@@ -40,6 +41,9 @@ public class SearchEndpoint extends BaseEndpoint {
 
         @POST("/preSearch")
         Call<PreSearchResponse> preSearch(@HeaderMap Map<String, String> headers, @Body PreSearchRequest body);
+
+        @POST("/search")
+        Call<SearchResponse> openClarification(@HeaderMap Map<String, String> headers, @Body OpenClarificationRequest body);
     }
 
     public Response<SearchResponse> search(SearchRequest request) throws IOException {
@@ -85,5 +89,14 @@ public class SearchEndpoint extends BaseEndpoint {
         headers.put("Authorization", "Bearer " + getToken());
 
         return service.preSearch(headers, request).execute();
+    }
+
+    public Response<SearchResponse> openClarification(OpenClarificationRequest request) throws IOException {
+        SearchService service = getFactory().getHttpClient().create(SearchService.class);
+
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + getToken());
+
+        return service.openClarification(headers, request).execute();
     }
 }

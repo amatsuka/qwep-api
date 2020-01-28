@@ -70,6 +70,10 @@ public class Main {
         qwepApiService.preSearch("a12345", new LinkedList<>(), new LinkedList<>());
     }
 
+    public static void openClarification(QwepApiService qwepApiService) {
+        qwepApiService.openClarification("a12345", new LinkedList<>(), 0);
+    }
+
     //TODO добавить вызовы API аккаунтов
     @RequiredArgsConstructor
     public static class StubStorage implements QwepTokenStorage {

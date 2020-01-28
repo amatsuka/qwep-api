@@ -10,6 +10,8 @@ import by.yoursoft.pitstop.qwepapi.request.common.CommonFilter;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchSort;
+import by.yoursoft.pitstop.qwepapi.request.search.clarification.OpenClarificationRequest;
+import by.yoursoft.pitstop.qwepapi.request.search.clarification.OpenClarificationRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.search.presearch.PreSearchRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.status.SearchStatusRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.updates.SearchUpdatesRequest;
@@ -111,6 +113,15 @@ public class QwepApiService {
         PreSearchResponse preSearchResponse  = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeSearchEndpoint()::preSearch, request));
 
         return preSearchResponse.getEntity().getShortNumbers();
+    }
+
+    public SearchResponseBody openClarification(String clarificationId, List<SearchSort> sorts, int type) {
+        OpenClarificationRequest request = new OpenClarificationRequest();
+        request.setRequestBody(new OpenClarificationRequestBody().setClarificationId(clarificationId).setSorts(sorts).setType(type));
+
+        SearchResponse searchResponse  = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeSearchEndpoint()::openClarification, request));
+
+        return searchResponse.getEntity();
     }
 
     public SearchRequestBuilder searchRequestBuilder() {
