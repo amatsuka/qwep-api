@@ -6,8 +6,12 @@ import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAdd;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequest;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.basket.change.ChangeBasketItemRequest;
+import by.yoursoft.pitstop.qwepapi.request.basket.change.ChangeBasketItemRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.basket.clear.ClearBasketRequest;
 import by.yoursoft.pitstop.qwepapi.request.basket.clear.ClearBasketRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.basket.delete.DeleteFromBasketRequest;
+import by.yoursoft.pitstop.qwepapi.request.basket.delete.DeleteFromBasketRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.common.CommonFilter;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchSort;
@@ -175,6 +179,31 @@ public class QwepApiService {
                 .setBasketId(basketId));
 
         StatusResponse statusResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeBasketEndpoint()::clearBasket, request));
+
+        return statusResponse.getEntity().isStatus();
+    }
+
+    public boolean deleteFromBasket(Long accountId, Long basketId, Long basketItemId) {
+        DeleteFromBasketRequest request = new DeleteFromBasketRequest();
+        request.setRequestBody(new DeleteFromBasketRequestBody()
+                .setAccountId(accountId)
+                .setBasketId(basketId)
+                .setBasketItemId(basketItemId));
+
+        StatusResponse statusResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeBasketEndpoint()::deleteFromBasket, request));
+
+        return statusResponse.getEntity().isStatus();
+    }
+
+    public boolean changeBasketItemQuantity(Long accountId, Long basketId, Long basketItemId, Long quantity) {
+        ChangeBasketItemRequest request = new ChangeBasketItemRequest();
+        request.setRequestBody(new ChangeBasketItemRequestBody()
+                .setAccountId(accountId)
+                .setBasketId(basketId)
+                .setBasketItemId(basketItemId)
+                .setQuantity(quantity));
+
+        StatusResponse statusResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeBasketEndpoint()::changeBasketItem, request));
 
         return statusResponse.getEntity().isStatus();
     }
