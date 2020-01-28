@@ -74,7 +74,6 @@ public class Main {
         qwepApiService.openClarification("a12345", new LinkedList<>(), 0);
     }
 
-    //TODO добавить вызовы API аккаунтов
     @RequiredArgsConstructor
     public static class StubStorage implements QwepTokenStorage {
 

@@ -1,15 +1,12 @@
-package by.yoursoft.pitstop.qwepapi.response.basket.get;
+package by.yoursoft.pitstop.qwepapi.response.basket.list;
 
 import by.yoursoft.pitstop.qwepapi.response.BaseResponse;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import lombok.Data;
-
-import java.util.List;
 
 
 @JsonRootName("Response")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BasketGetResponse extends BaseResponse<BasketGetResponseBody> {
+public class BasketListResponse extends BaseResponse<BasketListResponseBody> {
 
 }

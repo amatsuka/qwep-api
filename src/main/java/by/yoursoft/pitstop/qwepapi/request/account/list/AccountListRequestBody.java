@@ -1,15 +1,13 @@
-package by.yoursoft.pitstop.qwepapi.request.account.get;
+package by.yoursoft.pitstop.qwepapi.request.account.list;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.util.List;
-
 @Data
 @Accessors(chain = true)
 @JsonRootName("Request")
-public class AccountGetRequestBody {
+public class AccountListRequestBody {
     private boolean promo = false;
     private boolean enabled = false;
 }

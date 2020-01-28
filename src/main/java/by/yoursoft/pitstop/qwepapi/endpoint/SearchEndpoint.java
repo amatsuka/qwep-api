@@ -26,7 +26,7 @@ public class SearchEndpoint extends BaseEndpoint {
         super(factory);
     }
 
-    public interface SearchService {
+    private interface SearchService {
         @POST("/search")
         Call<SearchResponse> search(@HeaderMap Map<String, String> headers, @Body SearchRequest body);
 

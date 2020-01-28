@@ -3,7 +3,7 @@ package by.yoursoft.pitstop.qwepapi.endpoint;
 import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequest;
 import by.yoursoft.pitstop.qwepapi.request.account.delete.AccountDeleteRequest;
-import by.yoursoft.pitstop.qwepapi.request.account.get.AccountGetRequest;
+import by.yoursoft.pitstop.qwepapi.request.account.list.AccountListRequest;
 import by.yoursoft.pitstop.qwepapi.response.account.add.AccountAddResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.delete.AccountDeleteResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.get.AccountGetResponse;
@@ -22,12 +22,12 @@ public class AccountEndpoint extends BaseEndpoint {
         super(factory);
     }
 
-    public interface AccountService {
+    private interface AccountService {
         @POST("/accounts/add")
         Call<AccountAddResponse> addAccount(@HeaderMap Map<String, String> headers, @Body AccountAddRequest body);
 
-        @POST("/accounts/get")
-        Call<AccountGetResponse> getAccount(@HeaderMap Map<String, String> headers, @Body AccountGetRequest body);
+        @POST("/accounts/list")
+        Call<AccountGetResponse> getAccount(@HeaderMap Map<String, String> headers, @Body AccountListRequest body);
 
         @POST("/accounts/delete")
         Call<AccountDeleteResponse> deleteAccount(@HeaderMap Map<String, String> headers, @Body AccountDeleteRequest body);
@@ -42,7 +42,7 @@ public class AccountEndpoint extends BaseEndpoint {
         return service.addAccount(headers, request).execute();
     }
 
-    public Response<AccountGetResponse> getAccount(AccountGetRequest request) throws IOException {
+    public Response<AccountGetResponse> getAccount(AccountListRequest request) throws IOException {
         AccountService service = getFactory().getHttpClient().create(AccountService.class);
 
         HashMap<String, String> headers = new HashMap<>();

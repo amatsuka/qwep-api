@@ -1,4 +1,4 @@
-package by.yoursoft.pitstop.qwepapi.response.basket.get;
+package by.yoursoft.pitstop.qwepapi.response.basket.list;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.org.apache.xpath.internal.operations.String;

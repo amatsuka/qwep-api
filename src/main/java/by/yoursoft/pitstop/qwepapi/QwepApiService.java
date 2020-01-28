@@ -22,19 +22,18 @@ import by.yoursoft.pitstop.qwepapi.request.search.status.SearchStatusRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.updates.SearchUpdatesRequest;
 import by.yoursoft.pitstop.qwepapi.request.account.delete.AccountDeleteRequest;
 import by.yoursoft.pitstop.qwepapi.request.account.delete.AccountDeleteRequestBody;
-import by.yoursoft.pitstop.qwepapi.request.account.get.AccountGetRequest;
-import by.yoursoft.pitstop.qwepapi.request.account.get.AccountGetRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.account.list.AccountListRequest;
+import by.yoursoft.pitstop.qwepapi.request.account.list.AccountListRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.basket.add.BasketAddRequest;
 import by.yoursoft.pitstop.qwepapi.request.basket.add.BasketAddRequestBody;
-import by.yoursoft.pitstop.qwepapi.request.common.CommonNumFilter;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListFilter;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequest;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequestBody;
 import by.yoursoft.pitstop.qwepapi.response.BaseResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.add.AccountAddResponse;
 import by.yoursoft.pitstop.qwepapi.response.basket.add.BasketAddResponseBody;
-import by.yoursoft.pitstop.qwepapi.response.basket.get.BasketGetResponse;
-import by.yoursoft.pitstop.qwepapi.response.basket.get.BasketItemList;
+import by.yoursoft.pitstop.qwepapi.response.basket.list.BasketListResponse;
+import by.yoursoft.pitstop.qwepapi.response.basket.list.BasketItemList;
 import by.yoursoft.pitstop.qwepapi.response.common.StatusResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponseBody;
@@ -119,7 +118,7 @@ public class QwepApiService {
     }
 
 
-    public List<ShortNumber> preSearch(String article, List<CommonFilter> accounts, List<CommonFilter> vendors) {
+    public List<ShortNumber> preSearch(String article, List<CommonFilter<String>> accounts, List<CommonFilter> vendors) {
         PreSearchRequest request = new PreSearchRequest();
 
         PreSearchResponse preSearchResponse  = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeSearchEndpoint()::preSearch, request));
@@ -141,8 +140,8 @@ public class QwepApiService {
     }
 
     public List<AccountItem> getAccount(boolean promo, boolean enabled){
-        AccountGetRequest request = new AccountGetRequest();
-        request.setRequestBody(new AccountGetRequestBody()
+        AccountListRequest request = new AccountListRequest();
+        request.setRequestBody(new AccountListRequestBody()
                 .setPromo(promo)
                 .setEnabled(enabled));
 
@@ -154,7 +153,7 @@ public class QwepApiService {
     public List<AccountItem> deleteAccount(Long id){
         AccountDeleteRequest request = new AccountDeleteRequest();
         request.setRequestBody(new AccountDeleteRequestBody()
-            .setAccounts(asList(new CommonNumFilter()
+            .setAccounts(asList(new CommonFilter<Long>()
                 .setId(id))));
         AccountDeleteResponse accountListResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeAccountEndpoint()::deleteAccount, request));
 
@@ -192,7 +191,7 @@ public class QwepApiService {
                 .setBasketId(basketId)
                 .setBasketItemId(basketItemId));
 
-        BasketGetResponse response = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeBasketEndpoint()::deleteFromBasket, request));
+        BasketListResponse response = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeBasketEndpoint()::deleteFromBasket, request));
 
         return response.getEntity().getBaskets();
     }
@@ -205,7 +204,7 @@ public class QwepApiService {
                 .setBasketItemId(basketItemId)
                 .setQuantity(quantity));
 
-        BasketGetResponse response = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeBasketEndpoint()::changeBasketItem, request));
+        BasketListResponse response = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeBasketEndpoint()::changeBasketItem, request));
 
         return response.getEntity().getBaskets();
     }

@@ -12,6 +12,6 @@ import java.util.List;
 public class PreSearchRequestBody {
     private String article;
     private boolean excludePromo = false;
-    private List<CommonFilter> accounts = new LinkedList<>();
-    private List<CommonFilter> vendors = new LinkedList<>();
+    private List<CommonFilter<String>> accounts = new LinkedList<>();
+    private List<CommonFilter<String>> vendors = new LinkedList<>();
 }

@@ -26,9 +26,9 @@ public class SearchRequestBody {
 
     private boolean flatView = false;
 
-    private List<CommonFilter> accounts = new LinkedList<>();
+    private List<CommonFilter<String>> accounts = new LinkedList<>();
 
-    private List<CommonFilter> vendors = new LinkedList<>();
+    private List<CommonFilter<String>> vendors = new LinkedList<>();
 
     private int type = 0;
 

@@ -1,10 +1,10 @@
-package by.yoursoft.pitstop.qwepapi.request.basket.get;
+package by.yoursoft.pitstop.qwepapi.request.basket.list;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
 
 @Data
 @JsonRootName("Request")
-public class BasketGetRequestBody {
+public class BasketListRequestBody {
     private Long accountId;
 }

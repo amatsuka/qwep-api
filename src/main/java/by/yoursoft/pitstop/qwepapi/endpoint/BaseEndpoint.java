@@ -18,12 +18,12 @@ import retrofit2.http.POST;
 import java.io.IOException;
 
 @RequiredArgsConstructor
-public abstract class BaseEndpoint {
+abstract class BaseEndpoint {
 
     @Getter
     private final QwepApiFactory factory;
 
-    public String getToken() {
+    String getToken() {
         QwepTokenStorage tokenStorage = factory.getConfig().getTokenStorage();
         if (tokenStorage.getToken() == null) {
             try {

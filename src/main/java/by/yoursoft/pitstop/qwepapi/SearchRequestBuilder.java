@@ -21,9 +21,9 @@ public class SearchRequestBuilder {
 
     private String shortArticle = StringUtils.EMPTY;
 
-    private List<CommonFilter> accounts = new LinkedList<>();
+    private List<CommonFilter<String>> accounts = new LinkedList<>();
 
-    private List<CommonFilter> vendors = new LinkedList<>();
+    private List<CommonFilter<String>> vendors = new LinkedList<>();
 
     private int type = 0;
 
@@ -62,12 +62,12 @@ public class SearchRequestBuilder {
         return this;
     }
 
-    public SearchRequestBuilder accounts(List<CommonFilter> accounts) {
+    public SearchRequestBuilder accounts(List<CommonFilter<String>> accounts) {
         this.accounts = accounts;
         return this;
     }
 
-    public SearchRequestBuilder vendors(List<CommonFilter> vendors) {
+    public SearchRequestBuilder vendors(List<CommonFilter<String>> vendors) {
         this.vendors = vendors;
         return this;
     }

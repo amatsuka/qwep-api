@@ -5,6 +5,6 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class CommonFilter {
-    private String id;
+public class CommonFilter<T> {
+    private T id;
 }

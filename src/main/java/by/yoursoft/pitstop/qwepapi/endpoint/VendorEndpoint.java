@@ -18,7 +18,7 @@ public class VendorEndpoint extends BaseEndpoint {
         super(factory);
     }
 
-    public interface VendorService {
+    private interface VendorService {
         @POST("/vendors")
         Call<VendorListResponse> getVendorList(@HeaderMap Map<String, String> headers, @Body VendorListRequest body);
     }
