@@ -6,6 +6,7 @@ import by.yoursoft.pitstop.qwepapi.request.basket.change.ChangeBasketItemRequest
 import by.yoursoft.pitstop.qwepapi.request.basket.clear.ClearBasketRequest;
 import by.yoursoft.pitstop.qwepapi.request.basket.delete.DeleteFromBasketRequest;
 import by.yoursoft.pitstop.qwepapi.response.basket.add.BasketAddResponse;
+import by.yoursoft.pitstop.qwepapi.response.basket.get.BasketGetResponse;
 import by.yoursoft.pitstop.qwepapi.response.common.StatusResponse;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -28,10 +29,10 @@ public class BasketEndpoint extends BaseEndpoint{
         Call<StatusResponse> clearBasket(@HeaderMap Map<String, String> headers, @Body ClearBasketRequest body);
 
         @POST("/basket/deleteItem")
-        Call<StatusResponse> deleteFromBasket(@HeaderMap Map<String, String> headers, @Body DeleteFromBasketRequest body);
+        Call<BasketGetResponse> deleteFromBasket(@HeaderMap Map<String, String> headers, @Body DeleteFromBasketRequest body);
 
         @POST("/basket/changeItem")
-        Call<StatusResponse> changeItem(@HeaderMap Map<String, String> headers, @Body ChangeBasketItemRequest body);
+        Call<BasketGetResponse> changeItem(@HeaderMap Map<String, String> headers, @Body ChangeBasketItemRequest body);
     }
 
     public Response<BasketAddResponse> addBasket(BasketAddRequest request) throws IOException {
@@ -52,7 +53,7 @@ public class BasketEndpoint extends BaseEndpoint{
         return service.clearBasket(headers, request).execute();
     }
 
-    public Response<StatusResponse> deleteFromBasket(DeleteFromBasketRequest request) throws IOException {
+    public Response<BasketGetResponse> deleteFromBasket(DeleteFromBasketRequest request) throws IOException {
         BasketService service = getFactory().getHttpClient().create(BasketService.class);
 
         HashMap<String, String> headers = new HashMap<>();
@@ -61,7 +62,7 @@ public class BasketEndpoint extends BaseEndpoint{
         return service.deleteFromBasket(headers, request).execute();
     }
 
-    public Response<StatusResponse> changeBasketItem(ChangeBasketItemRequest request) throws IOException {
+    public Response<BasketGetResponse> changeBasketItem(ChangeBasketItemRequest request) throws IOException {
         BasketService service = getFactory().getHttpClient().create(BasketService.class);
 
         HashMap<String, String> headers = new HashMap<>();
