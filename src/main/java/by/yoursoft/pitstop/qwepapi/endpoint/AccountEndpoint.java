@@ -6,7 +6,7 @@ import by.yoursoft.pitstop.qwepapi.request.account.delete.AccountDeleteRequest;
 import by.yoursoft.pitstop.qwepapi.request.account.list.AccountListRequest;
 import by.yoursoft.pitstop.qwepapi.response.account.add.AccountAddResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.delete.AccountDeleteResponse;
-import by.yoursoft.pitstop.qwepapi.response.account.get.AccountGetResponse;
+import by.yoursoft.pitstop.qwepapi.response.account.lest.AccountListResponse;
 import by.yoursoft.pitstop.qwepapi.utils.HttpUtils;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -27,7 +27,7 @@ public class AccountEndpoint extends AbstractEndpoint {
         Call<AccountAddResponse> addAccount(@HeaderMap Map<String, String> headers, @Body AccountAddRequest body);
 
         @POST("/accounts/list")
-        Call<AccountGetResponse> getAccount(@HeaderMap Map<String, String> headers, @Body AccountListRequest body);
+        Call<AccountListResponse> getAccount(@HeaderMap Map<String, String> headers, @Body AccountListRequest body);
 
         @POST("/accounts/delete")
         Call<AccountDeleteResponse> deleteAccount(@HeaderMap Map<String, String> headers, @Body AccountDeleteRequest body);
@@ -39,7 +39,7 @@ public class AccountEndpoint extends AbstractEndpoint {
         return service.addAccount(HttpUtils.makeAuthHeader(getToken()), request).execute();
     }
 
-    public Response<AccountGetResponse> getAccount(AccountListRequest request) throws IOException {
+    public Response<AccountListResponse> getAccount(AccountListRequest request) throws IOException {
         AccountService service = getFactory().getHttpClient().create(AccountService.class);
 
         return service.getAccount(HttpUtils.makeAuthHeader(getToken()), request).execute();

@@ -1,4 +1,4 @@
-package by.yoursoft.pitstop.qwepapi.response.account.get;
+package by.yoursoft.pitstop.qwepapi.response.account.lest;
 
 import by.yoursoft.pitstop.qwepapi.response.common.AccountItem;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -8,6 +8,6 @@ import java.util.List;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AccountGetResponseBody {
+public class AccountListResponseBody {
     private List<AccountItem> accounts;
 }

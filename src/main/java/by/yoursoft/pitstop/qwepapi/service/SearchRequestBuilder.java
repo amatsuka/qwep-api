@@ -1,4 +1,4 @@
-package by.yoursoft.pitstop.qwepapi;
+package by.yoursoft.pitstop.qwepapi.service;
 
 import by.yoursoft.pitstop.qwepapi.request.common.CommonFilter;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchRequestBody;
