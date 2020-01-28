@@ -12,6 +12,8 @@ import by.yoursoft.pitstop.qwepapi.request.basket.clear.ClearBasketRequest;
 import by.yoursoft.pitstop.qwepapi.request.basket.clear.ClearBasketRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.basket.delete.DeleteFromBasketRequest;
 import by.yoursoft.pitstop.qwepapi.request.basket.delete.DeleteFromBasketRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.basket.list.BasketListRequest;
+import by.yoursoft.pitstop.qwepapi.request.basket.list.BasketListRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.common.CommonFilter;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchSort;
@@ -168,11 +170,19 @@ public class QwepApiService {
                 .setComment(comment)
                 .setType(type));
 
-        BasketAddResponse basketListResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeBasketEndpoint()::addBasket, request));
+        BasketAddResponse basketAddResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeBasketEndpoint()::addBasket, request));
 
-        return basketListResponse.getEntity();
+        return basketAddResponse.getEntity();
     }
+    public List<BasketItemList> getBasket(Long accountId){
+        BasketListRequest request = new BasketListRequest();
+        request.setRequestBody(new BasketListRequestBody()
+            .setAccountId(accountId));
 
+        BasketListResponse basketListResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeBasketEndpoint()::getBasket, request));
+
+        return basketListResponse.getEntity().getBaskets();
+    }
     public boolean clearBasket(Long accountId, Long basketId) {
         ClearBasketRequest request = new ClearBasketRequest();
         request.setRequestBody(new ClearBasketRequestBody()
