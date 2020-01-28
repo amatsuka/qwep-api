@@ -2,10 +2,10 @@ package by.yoursoft.pitstop.qwepapi.endpoint;
 
 import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequest;
-import by.yoursoft.pitstop.qwepapi.request.account.del.AccountDelRequest;
+import by.yoursoft.pitstop.qwepapi.request.account.delete.AccountDeleteRequest;
 import by.yoursoft.pitstop.qwepapi.request.account.get.AccountGetRequest;
 import by.yoursoft.pitstop.qwepapi.response.account.add.AccountAddResponse;
-import by.yoursoft.pitstop.qwepapi.response.account.del.AccountDelResponse;
+import by.yoursoft.pitstop.qwepapi.response.account.delete.AccountDeleteResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.get.AccountGetResponse;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -30,7 +30,7 @@ public class AccountEndpoint extends BaseEndpoint {
         Call<AccountGetResponse> getAccount(@HeaderMap Map<String, String> headers, @Body AccountGetRequest body);
 
         @POST("/accounts/delete")
-        Call<AccountDelResponse> delAccount(@HeaderMap Map<String, String> headers, @Body AccountDelRequest body);
+        Call<AccountDeleteResponse> deleleAccount(@HeaderMap Map<String, String> headers, @Body AccountDeleteRequest body);
     }
 
     public Response<AccountAddResponse> addAccount(AccountAddRequest request) throws IOException {
@@ -51,13 +51,13 @@ public class AccountEndpoint extends BaseEndpoint {
         return service.getAccount(headers, request).execute();
     }
 
-    public Response<AccountDelResponse> delAccount(AccountDelRequest request) throws IOException{
+    public Response<AccountDeleteResponse> deleteAccount(AccountDeleteRequest request) throws IOException{
         AccountService service = getFactory().getHttpClient().create(AccountService.class);
 
         HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + getToken());
 
-        return service.delAccount(headers, request).execute();
+        return service.deleleAccount(headers, request).execute();
     }
 
 }

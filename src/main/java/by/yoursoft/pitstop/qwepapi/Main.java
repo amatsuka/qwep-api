@@ -3,12 +3,17 @@ package by.yoursoft.pitstop.qwepapi;
 import by.yoursoft.pitstop.qwepapi.config.BaseQwepFactoryConfig;
 import by.yoursoft.pitstop.qwepapi.config.QwepTokenStorage;
 import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
-import by.yoursoft.pitstop.qwepapi.request.account.get.AccountGet;
-import by.yoursoft.pitstop.qwepapi.response.common.AccountItem;
+import by.yoursoft.pitstop.qwepapi.request.search.ESearchSortOrder;
+import by.yoursoft.pitstop.qwepapi.request.search.ESearchSortType;
+import by.yoursoft.pitstop.qwepapi.request.search.SearchRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.search.SearchSort;
+import by.yoursoft.pitstop.qwepapi.response.search.SearchResponseBody;
 import by.yoursoft.pitstop.qwepapi.response.vendor.VendorItem;
+import by.yoursoft.pitstop.qwepapi.response.common.AccountItem;
 import lombok.RequiredArgsConstructor;
 import okhttp3.logging.HttpLoggingInterceptor;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -30,14 +35,46 @@ public class Main {
                 .setHttpInterceptors(asList(new HttpLoggingInterceptor()));
 
         QwepApiFactory qwepApiFactory = new QwepApiFactory(baseQwepFactoryConfig);
-
         QwepApiService qwepApiService = new QwepApiService(qwepApiFactory);
-
-        //List<VendorItem> vendorList = qwepApiService.getVendorList();
-        List<AccountItem> accountGetList = qwepApiService.getAccount(false, false);
-       // List<AccountItem> accountDelList = qwepApiService.delAccount((long) 1176695);
     }
 
+    public static void vendorList(QwepApiService qwepApiService) {
+        List<VendorItem> vendorList = qwepApiService.getVendorList();
+    }
+
+    public static void search(QwepApiService qwepApiService) {
+        SearchRequestBuilder builder = qwepApiService.searchRequestBuilder()
+                .article("01244")
+                .brand("Febi")
+                .sorts(asList(new SearchSort()
+                        .setSort("article")
+                        .setType(ESearchSortType.ITEMS)
+                        .setOrder(ESearchSortOrder.ASC)));
+
+        SearchResponseBody search = qwepApiService.search(builder);
+    }
+
+    public static void searchUpdates(QwepApiService qwepApiService, String searchId) {
+        qwepApiService.searchUpdates(searchId, new LinkedList<>());
+    }
+
+    public static void searchResults(QwepApiService qwepApiService, String searchId) {
+        qwepApiService.searchResults(searchId, new LinkedList<>());
+    }
+
+    public static void searchStatus(QwepApiService qwepApiService, String searchId) {
+        qwepApiService.searchStatus(searchId);
+    }
+
+    public static void preSearch(QwepApiService qwepApiService) {
+        qwepApiService.preSearch("a12345", new LinkedList<>(), new LinkedList<>());
+    }
+
+    public static void openClarification(QwepApiService qwepApiService) {
+        qwepApiService.openClarification("a12345", new LinkedList<>(), 0);
+    }
+
+    //TODO добавить вызовы API аккаунтов
     @RequiredArgsConstructor
     public static class StubStorage implements QwepTokenStorage {
 

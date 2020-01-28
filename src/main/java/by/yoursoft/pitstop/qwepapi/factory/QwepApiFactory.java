@@ -3,6 +3,7 @@ package by.yoursoft.pitstop.qwepapi.factory;
 import by.yoursoft.pitstop.qwepapi.config.AbstractQwepFactoryConfig;
 import by.yoursoft.pitstop.qwepapi.endpoint.AccountEndpoint;
 import by.yoursoft.pitstop.qwepapi.endpoint.BasketEndpoint;
+import by.yoursoft.pitstop.qwepapi.endpoint.SearchEndpoint;
 import by.yoursoft.pitstop.qwepapi.endpoint.VendorEndpoint;
 import lombok.Getter;
 import retrofit2.Retrofit;
@@ -32,6 +33,10 @@ public class QwepApiFactory {
 
     public BasketEndpoint makeBasketEndpoint() {
         return new BasketEndpoint(this);
+    }
+
+    public SearchEndpoint makeSearchEndpoint() {
+        return new SearchEndpoint(this);
     }
 
 }

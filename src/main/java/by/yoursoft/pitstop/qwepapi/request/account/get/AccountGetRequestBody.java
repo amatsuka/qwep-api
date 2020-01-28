@@ -10,5 +10,6 @@ import java.util.List;
 @Accessors(chain = true)
 @JsonRootName("Request")
 public class AccountGetRequestBody {
-    private List<AccountGet> accounts;
+    private boolean promo = false;
+    private boolean enabled = false;
 }

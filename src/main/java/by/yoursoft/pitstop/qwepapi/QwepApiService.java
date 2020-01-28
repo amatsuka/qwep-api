@@ -6,21 +6,35 @@ import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAdd;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequest;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequestBody;
-import by.yoursoft.pitstop.qwepapi.request.account.del.AccountDel;
-import by.yoursoft.pitstop.qwepapi.request.account.del.AccountDelRequest;
-import by.yoursoft.pitstop.qwepapi.request.account.del.AccountDelRequestBody;
-import by.yoursoft.pitstop.qwepapi.request.account.get.AccountGet;
+import by.yoursoft.pitstop.qwepapi.request.common.CommonFilter;
+import by.yoursoft.pitstop.qwepapi.request.search.SearchRequest;
+import by.yoursoft.pitstop.qwepapi.request.search.SearchRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.search.SearchSort;
+import by.yoursoft.pitstop.qwepapi.request.search.clarification.OpenClarificationRequest;
+import by.yoursoft.pitstop.qwepapi.request.search.clarification.OpenClarificationRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.search.presearch.PreSearchRequest;
+import by.yoursoft.pitstop.qwepapi.request.search.status.SearchStatusRequest;
+import by.yoursoft.pitstop.qwepapi.request.search.updates.SearchUpdatesRequest;
+import by.yoursoft.pitstop.qwepapi.request.account.delete.AccountDeleteRequest;
+import by.yoursoft.pitstop.qwepapi.request.account.delete.AccountDeleteRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.account.get.AccountGetRequest;
 import by.yoursoft.pitstop.qwepapi.request.account.get.AccountGetRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.basket.add.BasketAdd;
 import by.yoursoft.pitstop.qwepapi.request.basket.add.BasketAddRequest;
 import by.yoursoft.pitstop.qwepapi.request.basket.add.BasketAddRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.common.CommonNumFilter;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListFilter;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequest;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequestBody;
 import by.yoursoft.pitstop.qwepapi.response.BaseResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.add.AccountAddResponse;
-import by.yoursoft.pitstop.qwepapi.response.account.del.AccountDelResponse;
+import by.yoursoft.pitstop.qwepapi.response.search.SearchResponse;
+import by.yoursoft.pitstop.qwepapi.response.search.SearchResponseBody;
+import by.yoursoft.pitstop.qwepapi.response.search.presearch.PreSearchResponse;
+import by.yoursoft.pitstop.qwepapi.response.search.presearch.ShortNumber;
+import by.yoursoft.pitstop.qwepapi.response.search.status.SearchStatusResponse;
+import by.yoursoft.pitstop.qwepapi.response.search.status.SearchStatusResponseBody;
+import by.yoursoft.pitstop.qwepapi.response.account.delete.AccountDeleteResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.get.AccountGetResponse;
 import by.yoursoft.pitstop.qwepapi.response.basket.add.BasketAddResponse;
 import by.yoursoft.pitstop.qwepapi.response.basket.add.BasketItem;
@@ -64,24 +78,78 @@ public class QwepApiService {
         return vendorListResponse.getEntity().getAccounts();
     }
 
+    public SearchResponseBody search(SearchRequestBuilder requestBuilder) {
+        SearchRequest request = new SearchRequest();
+        request.setRequestBody(requestBuilder.build());
+
+        SearchResponse searchResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeSearchEndpoint()::search, request));
+
+        return searchResponse.getEntity();
+    }
+
+    public SearchResponseBody searchUpdates(String searchId, List<SearchSort> sorts) {
+        SearchUpdatesRequest request = new SearchUpdatesRequest();
+
+        SearchResponse searchResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeSearchEndpoint()::searchUpdates, request));
+
+        return searchResponse.getEntity();
+    }
+
+    public SearchResponseBody searchResults(String searchId, List<SearchSort> sorts) {
+        SearchUpdatesRequest request = new SearchUpdatesRequest();
+
+        SearchResponse searchResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeSearchEndpoint()::searchResults, request));
+
+        return searchResponse.getEntity();
+    }
+
+    public SearchStatusResponseBody searchStatus(String searchId) {
+        SearchStatusRequest request = new SearchStatusRequest();
+
+        SearchStatusResponse searchStatusResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeSearchEndpoint()::searchStatus, request));
+
+        return searchStatusResponse.getEntity();
+    }
+
+
+    public List<ShortNumber> preSearch(String article, List<CommonFilter> accounts, List<CommonFilter> vendors) {
+        PreSearchRequest request = new PreSearchRequest();
+
+        PreSearchResponse preSearchResponse  = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeSearchEndpoint()::preSearch, request));
+
+        return preSearchResponse.getEntity().getShortNumbers();
+    }
+
+    public SearchResponseBody openClarification(String clarificationId, List<SearchSort> sorts, int type) {
+        OpenClarificationRequest request = new OpenClarificationRequest();
+        request.setRequestBody(new OpenClarificationRequestBody().setClarificationId(clarificationId).setSorts(sorts).setType(type));
+
+        SearchResponse searchResponse  = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeSearchEndpoint()::openClarification, request));
+
+        return searchResponse.getEntity();
+    }
+
+    public SearchRequestBuilder searchRequestBuilder() {
+        return new SearchRequestBuilder();
+    }
+
     public List<AccountItem> getAccount(boolean promo, boolean enabled){
         AccountGetRequest request = new AccountGetRequest();
         request.setRequestBody(new AccountGetRequestBody()
-            .setAccounts(asList(new AccountGet()
                 .setPromo(promo)
-                .setEnabled(enabled))));
+                .setEnabled(enabled));
 
         AccountGetResponse accountListResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeAccountEndpoint()::getAccount, request));
 
         return accountListResponse.getEntity().getAccounts();
     }
 
-    public List<AccountItem> delAccount(Long id){
-        AccountDelRequest request = new AccountDelRequest();
-        request.setRequestBody(new AccountDelRequestBody()
-            .setAccounts(asList(new AccountDel()
+    public List<AccountItem> deleteAccount(Long id){
+        AccountDeleteRequest request = new AccountDeleteRequest();
+        request.setRequestBody(new AccountDeleteRequestBody()
+            .setAccounts(asList(new CommonNumFilter()
                 .setId(id))));
-        AccountDelResponse accountListResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeAccountEndpoint()::delAccount, request));
+        AccountDeleteResponse accountListResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeAccountEndpoint()::deleteAccount, request));
 
         return accountListResponse.getEntity().getAccounts();
     }
