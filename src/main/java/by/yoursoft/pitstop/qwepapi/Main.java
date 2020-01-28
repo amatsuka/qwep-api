@@ -6,18 +6,25 @@ import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
 import by.yoursoft.pitstop.qwepapi.request.search.ESearchSortOrder;
 import by.yoursoft.pitstop.qwepapi.request.search.ESearchSortType;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchSort;
+import by.yoursoft.pitstop.qwepapi.response.basket.add.BasketAddResponseBody;
+import by.yoursoft.pitstop.qwepapi.response.basket.list.BasketItemList;
+import by.yoursoft.pitstop.qwepapi.response.basket.list.BasketListResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponseBody;
 import by.yoursoft.pitstop.qwepapi.response.vendor.VendorItem;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.RequiredArgsConstructor;
 import okhttp3.logging.HttpLoggingInterceptor;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
 import static java.util.Arrays.asList;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         String baseUrl = "http://userapi.qwep.ru";
         String apiKey = "F3F6FC0D38B8AFDCB888";
         String applicationNum = "1";
@@ -71,6 +78,11 @@ public class Main {
 
     public static void openClarification(QwepApiService qwepApiService) {
         qwepApiService.openClarification("a12345", new LinkedList<>(), 0);
+    }
+
+    public static void getBasket(QwepApiService qwepApiService){
+        qwepApiService.getBasket((long)915067);
+
     }
 
     @RequiredArgsConstructor

@@ -1,7 +1,6 @@
 package by.yoursoft.pitstop.qwepapi.response.basket.list;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.org.apache.xpath.internal.operations.String;
 import lombok.Data;
 
 import java.util.LinkedList;
@@ -15,5 +14,5 @@ public class BasketForm {
     private String title;
     private String caption;
     private boolean disabled;
-    private List<BasketFormFields> basketFormFields = new LinkedList<>();
+    private List<BasketFormFields> fields = new LinkedList<>();
 }

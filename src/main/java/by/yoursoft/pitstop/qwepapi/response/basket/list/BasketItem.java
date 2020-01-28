@@ -1,7 +1,6 @@
 package by.yoursoft.pitstop.qwepapi.response.basket.list;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.org.apache.xpath.internal.operations.String;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -22,5 +21,5 @@ public class BasketItem {
     private String title;
     private LocalDateTime delivery;
     private String warehouse;
-    private List<BasketItemFields> basketItemFields = new LinkedList<>();
+    private List<BasketItemFields> fields = new LinkedList<>();
 }

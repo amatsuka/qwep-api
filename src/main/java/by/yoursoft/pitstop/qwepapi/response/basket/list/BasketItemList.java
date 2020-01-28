@@ -14,9 +14,9 @@ public class BasketItemList {
     private String vendorId;
     private String vendorTitle;
 
-    private List<BasketItem> basketItem = new LinkedList<>();
-    private List<BasketForm> basketForm = new LinkedList<>();
+    private List<BasketItem> basketItems = new LinkedList<>();
+    private BasketForm basketForm;
 
-    private boolean status;
+    //private boolean status;
 
 }

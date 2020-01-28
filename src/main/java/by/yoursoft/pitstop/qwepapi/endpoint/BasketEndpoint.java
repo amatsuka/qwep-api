@@ -5,6 +5,7 @@ import by.yoursoft.pitstop.qwepapi.request.basket.add.BasketAddRequest;
 import by.yoursoft.pitstop.qwepapi.request.basket.change.ChangeBasketItemRequest;
 import by.yoursoft.pitstop.qwepapi.request.basket.clear.ClearBasketRequest;
 import by.yoursoft.pitstop.qwepapi.request.basket.delete.DeleteFromBasketRequest;
+import by.yoursoft.pitstop.qwepapi.request.basket.list.BasketListRequest;
 import by.yoursoft.pitstop.qwepapi.response.basket.add.BasketAddResponse;
 import by.yoursoft.pitstop.qwepapi.response.basket.list.BasketListResponse;
 import by.yoursoft.pitstop.qwepapi.response.common.StatusResponse;
@@ -25,6 +26,9 @@ public class BasketEndpoint extends AbstractEndpoint {
         @POST("/cart/add")
         Call<BasketAddResponse> addBasket(@HeaderMap Map<String, String> headers, @Body BasketAddRequest body);
 
+        @POST("/basket")
+        Call<BasketListResponse> getBasket(@HeaderMap Map<String, String> headers, @Body BasketListRequest body);
+
         @POST("/basket/clear")
         Call<StatusResponse> clearBasket(@HeaderMap Map<String, String> headers, @Body ClearBasketRequest body);
 
@@ -39,6 +43,12 @@ public class BasketEndpoint extends AbstractEndpoint {
         BasketService service = getFactory().getHttpClient().create(BasketService.class);
 
         return service.addBasket(HttpUtils.makeAuthHeader(getToken()), request).execute();
+    }
+
+    public Response<BasketListResponse> getBasket(BasketListRequest request) throws IOException{
+        BasketService service = getFactory().getHttpClient().create(BasketService.class);
+
+        return service.getBasket(HttpUtils.makeAuthHeader(getToken()), request).execute();
     }
 
     public Response<StatusResponse> clearBasket(ClearBasketRequest request) throws IOException {
