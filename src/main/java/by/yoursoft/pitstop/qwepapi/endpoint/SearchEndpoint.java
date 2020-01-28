@@ -9,6 +9,7 @@ import by.yoursoft.pitstop.qwepapi.request.search.updates.SearchUpdatesRequest;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.presearch.PreSearchResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.status.SearchStatusResponse;
+import by.yoursoft.pitstop.qwepapi.utils.HttpUtils;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.Body;
@@ -16,7 +17,6 @@ import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class SearchEndpoint extends AbstractEndpoint {
@@ -47,54 +47,36 @@ public class SearchEndpoint extends AbstractEndpoint {
     public Response<SearchResponse> search(SearchRequest request) throws IOException {
         SearchService service = getFactory().getHttpClient().create(SearchService.class);
 
-        HashMap<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + getToken());
-
-        return service.search(headers, request).execute();
+        return service.search(HttpUtils.makeAuthHeader(getToken()), request).execute();
     }
 
     public Response<SearchResponse> searchUpdates(SearchUpdatesRequest request) throws IOException {
         SearchService service = getFactory().getHttpClient().create(SearchService.class);
 
-        HashMap<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + getToken());
-
-        return service.searchUpdates(headers, request).execute();
+        return service.searchUpdates(HttpUtils.makeAuthHeader(getToken()), request).execute();
     }
 
     public Response<SearchResponse> searchResults(SearchUpdatesRequest request) throws IOException {
         SearchService service = getFactory().getHttpClient().create(SearchService.class);
 
-        HashMap<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + getToken());
-
-        return service.searchResults(headers, request).execute();
+        return service.searchResults(HttpUtils.makeAuthHeader(getToken()), request).execute();
     }
 
     public Response<SearchStatusResponse> searchStatus(SearchStatusRequest request) throws IOException {
         SearchService service = getFactory().getHttpClient().create(SearchService.class);
 
-        HashMap<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + getToken());
-
-        return service.searchStatus(headers, request).execute();
+        return service.searchStatus(HttpUtils.makeAuthHeader(getToken()), request).execute();
     }
 
     public Response<PreSearchResponse> preSearch(PreSearchRequest request) throws IOException {
         SearchService service = getFactory().getHttpClient().create(SearchService.class);
 
-        HashMap<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + getToken());
-
-        return service.preSearch(headers, request).execute();
+        return service.preSearch(HttpUtils.makeAuthHeader(getToken()), request).execute();
     }
 
     public Response<SearchResponse> openClarification(OpenClarificationRequest request) throws IOException {
         SearchService service = getFactory().getHttpClient().create(SearchService.class);
 
-        HashMap<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + getToken());
-
-        return service.openClarification(headers, request).execute();
+        return service.openClarification(HttpUtils.makeAuthHeader(getToken()), request).execute();
     }
 }

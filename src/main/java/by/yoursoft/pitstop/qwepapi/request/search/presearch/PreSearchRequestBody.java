@@ -11,7 +11,7 @@ import java.util.List;
 @Accessors(chain = true)
 public class PreSearchRequestBody {
     private String article;
-    private boolean excludePromo = false;
+    private boolean excludePromo;
     private List<CommonFilter<String>> accounts = new LinkedList<>();
     private List<CommonFilter<String>> vendors = new LinkedList<>();
 }

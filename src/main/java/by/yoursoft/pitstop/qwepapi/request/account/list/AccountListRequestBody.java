@@ -8,6 +8,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @JsonRootName("Request")
 public class AccountListRequestBody {
-    private boolean promo = false;
-    private boolean enabled = false;
+    private boolean promo;
+    private boolean enabled;
 }

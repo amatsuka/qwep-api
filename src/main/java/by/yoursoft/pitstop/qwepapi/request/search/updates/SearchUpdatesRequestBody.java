@@ -13,7 +13,7 @@ public class SearchUpdatesRequestBody {
 
     private String searchId;
 
-    private boolean flatView = false;
+    private boolean flatView;
 
     private List<SearchSort> sorts = new LinkedList<>();
 }

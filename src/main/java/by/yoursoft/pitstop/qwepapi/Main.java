@@ -6,7 +6,6 @@ import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
 import by.yoursoft.pitstop.qwepapi.request.search.ESearchSortOrder;
 import by.yoursoft.pitstop.qwepapi.request.search.ESearchSortType;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchSort;
-import by.yoursoft.pitstop.qwepapi.response.basket.add.BasketAddResponseBody;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponseBody;
 import by.yoursoft.pitstop.qwepapi.response.vendor.VendorItem;
 import lombok.RequiredArgsConstructor;
@@ -44,10 +43,10 @@ public class Main {
 
     public static void search(QwepApiService qwepApiService) {
         SearchRequestBuilder builder = qwepApiService.searchRequestBuilder()
-                .article("01244")
-                .brand("Febi")
-                .sorts(asList(new SearchSort()
-                        .setSort("article")
+                .setArticle("01244")
+                .setBrand("Febi")
+                .setSorts(asList(new SearchSort()
+                        .setSort("setArticle")
                         .setType(ESearchSortType.ITEMS)
                         .setOrder(ESearchSortOrder.ASC)));
 
@@ -81,7 +80,7 @@ public class Main {
 
         @Override
         public void setToken(String token) {
-
+            /*empty*/
         }
 
         @Override
@@ -91,7 +90,7 @@ public class Main {
 
         @Override
         public void removeToken() {
-
+            /*empty*/
         }
     }
 }

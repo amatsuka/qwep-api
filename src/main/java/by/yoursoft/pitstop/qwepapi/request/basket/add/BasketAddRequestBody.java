@@ -11,5 +11,5 @@ public class BasketAddRequestBody {
     private int itemId;
     private int quantity;
     private String comment;
-    private int type = 0;
+    private int type;
 }

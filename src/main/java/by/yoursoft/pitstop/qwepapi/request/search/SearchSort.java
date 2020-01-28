@@ -9,5 +9,5 @@ public class SearchSort {
     private ESearchSortType type;
     private String sort;
     private ESearchSortOrder order;
-    private boolean openAllClarifications = false;
+    private boolean openAllClarifications;
 }

@@ -10,7 +10,7 @@ import java.util.List;
 @Accessors(chain = true)
 public class OpenClarificationRequestBody {
     private String clarificationId;
-    private boolean flatView = false;
-    private int type = 0;
+    private boolean flatView;
+    private int type;
     private List<SearchSort> sorts;
 }

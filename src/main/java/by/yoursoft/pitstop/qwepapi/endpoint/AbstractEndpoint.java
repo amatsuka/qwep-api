@@ -23,7 +23,7 @@ abstract class AbstractEndpoint {
     @Getter
     private final QwepApiFactory factory;
 
-    String getToken() {
+    /*default*/ String getToken() {
         QwepTokenStorage tokenStorage = factory.getConfig().getTokenStorage();
         if (tokenStorage.getToken() == null) {
             try {

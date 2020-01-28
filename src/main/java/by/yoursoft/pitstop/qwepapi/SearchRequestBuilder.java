@@ -3,11 +3,15 @@ package by.yoursoft.pitstop.qwepapi;
 import by.yoursoft.pitstop.qwepapi.request.common.CommonFilter;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.search.SearchSort;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.LinkedList;
 import java.util.List;
 
+@Setter
+@Accessors(chain = true)
 public class SearchRequestBuilder {
     private String article;
 
@@ -17,7 +21,7 @@ public class SearchRequestBuilder {
 
     private String clarification;
 
-    private boolean excludePromo = false;
+    private boolean excludePromo;
 
     private String shortArticle = StringUtils.EMPTY;
 
@@ -25,61 +29,12 @@ public class SearchRequestBuilder {
 
     private List<CommonFilter<String>> vendors = new LinkedList<>();
 
-    private int type = 0;
+    private int type;
 
     private List<SearchSort> sorts = new LinkedList<>();
 
     /* default */ SearchRequestBuilder() {
-    }
-
-    public SearchRequestBuilder article(String article) {
-        this.article = article;
-        return this;
-    }
-
-    public SearchRequestBuilder brand(String brand) {
-        this.brand = brand;
-        return this;
-    }
-
-    public SearchRequestBuilder timeout(Long timeout) {
-        this.timeout = timeout;
-        return this;
-    }
-
-    public SearchRequestBuilder clarification(String clarification) {
-        this.clarification = clarification;
-        return this;
-    }
-
-    public SearchRequestBuilder excludePromo(boolean excludePromo) {
-        this.excludePromo = excludePromo;
-        return this;
-    }
-
-    public SearchRequestBuilder shortArticle(String shortArticle) {
-        this.shortArticle = shortArticle;
-        return this;
-    }
-
-    public SearchRequestBuilder accounts(List<CommonFilter<String>> accounts) {
-        this.accounts = accounts;
-        return this;
-    }
-
-    public SearchRequestBuilder vendors(List<CommonFilter<String>> vendors) {
-        this.vendors = vendors;
-        return this;
-    }
-
-    public SearchRequestBuilder type(int type) {
-        this.type = type;
-        return this;
-    }
-
-    public SearchRequestBuilder sorts(List<SearchSort> sorts) {
-        this.sorts = sorts;
-        return this;
+        /*empty*/
     }
 
     public SearchRequestBody build() {

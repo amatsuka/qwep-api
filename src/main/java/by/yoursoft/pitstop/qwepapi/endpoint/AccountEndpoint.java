@@ -7,6 +7,7 @@ import by.yoursoft.pitstop.qwepapi.request.account.list.AccountListRequest;
 import by.yoursoft.pitstop.qwepapi.response.account.add.AccountAddResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.delete.AccountDeleteResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.get.AccountGetResponse;
+import by.yoursoft.pitstop.qwepapi.utils.HttpUtils;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.Body;
@@ -14,7 +15,6 @@ import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class AccountEndpoint extends AbstractEndpoint {
@@ -36,28 +36,19 @@ public class AccountEndpoint extends AbstractEndpoint {
     public Response<AccountAddResponse> addAccount(AccountAddRequest request) throws IOException {
         AccountService service = getFactory().getHttpClient().create(AccountService.class);
 
-        HashMap<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + getToken());
-
-        return service.addAccount(headers, request).execute();
+        return service.addAccount(HttpUtils.makeAuthHeader(getToken()), request).execute();
     }
 
     public Response<AccountGetResponse> getAccount(AccountListRequest request) throws IOException {
         AccountService service = getFactory().getHttpClient().create(AccountService.class);
 
-        HashMap<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + getToken());
-
-        return service.getAccount(headers, request).execute();
+        return service.getAccount(HttpUtils.makeAuthHeader(getToken()), request).execute();
     }
 
     public Response<AccountDeleteResponse> deleteAccount(AccountDeleteRequest request) throws IOException{
         AccountService service = getFactory().getHttpClient().create(AccountService.class);
 
-        HashMap<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + getToken());
-
-        return service.deleteAccount(headers, request).execute();
+        return service.deleteAccount(HttpUtils.makeAuthHeader(getToken()), request).execute();
     }
 
 }

@@ -10,18 +10,22 @@ import javax.net.ssl.X509TrustManager;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public final class HttpUtils {
+public abstract class HttpUtils {
     private static TrustManager[] makeSslUnsafeTrustManager() {
         return new TrustManager[]{
                 new X509TrustManager() {
                     @Override
                     public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                        /*empty*/
                     }
 
                     @Override
                     public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                        /*empty*/
                     }
 
                     @Override
@@ -53,5 +57,12 @@ public final class HttpUtils {
                 .sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts[0])
                 .hostnameVerifier((hostname, session) -> true)
                 .addInterceptor(logging);
+    }
+
+    public static Map<String, String> makeAuthHeader(String token) {
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + token);
+
+        return headers;
     }
 }

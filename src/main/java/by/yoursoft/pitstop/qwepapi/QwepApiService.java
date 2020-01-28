@@ -6,6 +6,12 @@ import by.yoursoft.pitstop.qwepapi.factory.QwepApiFactory;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAdd;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequest;
 import by.yoursoft.pitstop.qwepapi.request.account.add.AccountAddRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.account.delete.AccountDeleteRequest;
+import by.yoursoft.pitstop.qwepapi.request.account.delete.AccountDeleteRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.account.list.AccountListRequest;
+import by.yoursoft.pitstop.qwepapi.request.account.list.AccountListRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.basket.add.BasketAddRequest;
+import by.yoursoft.pitstop.qwepapi.request.basket.add.BasketAddRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.basket.change.ChangeBasketItemRequest;
 import by.yoursoft.pitstop.qwepapi.request.basket.change.ChangeBasketItemRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.basket.clear.ClearBasketRequest;
@@ -18,22 +24,23 @@ import by.yoursoft.pitstop.qwepapi.request.search.SearchSort;
 import by.yoursoft.pitstop.qwepapi.request.search.clarification.OpenClarificationRequest;
 import by.yoursoft.pitstop.qwepapi.request.search.clarification.OpenClarificationRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.search.presearch.PreSearchRequest;
+import by.yoursoft.pitstop.qwepapi.request.search.presearch.PreSearchRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.search.status.SearchStatusRequest;
+import by.yoursoft.pitstop.qwepapi.request.search.status.SearchStatusRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.search.updates.SearchUpdatesRequest;
-import by.yoursoft.pitstop.qwepapi.request.account.delete.AccountDeleteRequest;
-import by.yoursoft.pitstop.qwepapi.request.account.delete.AccountDeleteRequestBody;
-import by.yoursoft.pitstop.qwepapi.request.account.list.AccountListRequest;
-import by.yoursoft.pitstop.qwepapi.request.account.list.AccountListRequestBody;
-import by.yoursoft.pitstop.qwepapi.request.basket.add.BasketAddRequest;
-import by.yoursoft.pitstop.qwepapi.request.basket.add.BasketAddRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.search.updates.SearchUpdatesRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListFilter;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequest;
 import by.yoursoft.pitstop.qwepapi.request.vendor.VendorListRequestBody;
 import by.yoursoft.pitstop.qwepapi.response.AbstractResponse;
 import by.yoursoft.pitstop.qwepapi.response.account.add.AccountAddResponse;
+import by.yoursoft.pitstop.qwepapi.response.account.delete.AccountDeleteResponse;
+import by.yoursoft.pitstop.qwepapi.response.account.get.AccountGetResponse;
+import by.yoursoft.pitstop.qwepapi.response.basket.add.BasketAddResponse;
 import by.yoursoft.pitstop.qwepapi.response.basket.add.BasketAddResponseBody;
-import by.yoursoft.pitstop.qwepapi.response.basket.list.BasketListResponse;
 import by.yoursoft.pitstop.qwepapi.response.basket.list.BasketItemList;
+import by.yoursoft.pitstop.qwepapi.response.basket.list.BasketListResponse;
+import by.yoursoft.pitstop.qwepapi.response.common.AccountItem;
 import by.yoursoft.pitstop.qwepapi.response.common.StatusResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.SearchResponseBody;
@@ -41,10 +48,6 @@ import by.yoursoft.pitstop.qwepapi.response.search.presearch.PreSearchResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.presearch.ShortNumber;
 import by.yoursoft.pitstop.qwepapi.response.search.status.SearchStatusResponse;
 import by.yoursoft.pitstop.qwepapi.response.search.status.SearchStatusResponseBody;
-import by.yoursoft.pitstop.qwepapi.response.account.delete.AccountDeleteResponse;
-import by.yoursoft.pitstop.qwepapi.response.account.get.AccountGetResponse;
-import by.yoursoft.pitstop.qwepapi.response.basket.add.BasketAddResponse;
-import by.yoursoft.pitstop.qwepapi.response.common.AccountItem;
 import by.yoursoft.pitstop.qwepapi.response.vendor.VendorItem;
 import by.yoursoft.pitstop.qwepapi.response.vendor.VendorListResponse;
 import by.yoursoft.pitstop.qwepapi.utils.RequestUtils;
@@ -95,6 +98,9 @@ public class QwepApiService {
 
     public SearchResponseBody searchUpdates(String searchId, List<SearchSort> sorts) {
         SearchUpdatesRequest request = new SearchUpdatesRequest();
+        request.setRequestBody(new SearchUpdatesRequestBody()
+                .setSearchId(searchId)
+                .setSorts(sorts));
 
         SearchResponse searchResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeSearchEndpoint()::searchUpdates, request));
 
@@ -103,6 +109,9 @@ public class QwepApiService {
 
     public SearchResponseBody searchResults(String searchId, List<SearchSort> sorts) {
         SearchUpdatesRequest request = new SearchUpdatesRequest();
+        request.setRequestBody(new SearchUpdatesRequestBody()
+                .setSearchId(searchId)
+                .setSorts(sorts));
 
         SearchResponse searchResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeSearchEndpoint()::searchResults, request));
 
@@ -111,15 +120,16 @@ public class QwepApiService {
 
     public SearchStatusResponseBody searchStatus(String searchId) {
         SearchStatusRequest request = new SearchStatusRequest();
+        request.setRequestBody(new SearchStatusRequestBody().setSearchId(searchId));
 
         SearchStatusResponse searchStatusResponse = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeSearchEndpoint()::searchStatus, request));
 
         return searchStatusResponse.getEntity();
     }
 
-
-    public List<ShortNumber> preSearch(String article, List<CommonFilter<String>> accounts, List<CommonFilter> vendors) {
+    public List<ShortNumber> preSearch(String article, List<CommonFilter<String>> accounts, List<CommonFilter<String>> vendors) {
         PreSearchRequest request = new PreSearchRequest();
+        request.setRequestBody(new PreSearchRequestBody().setArticle(article).setAccounts(accounts).setVendors(vendors));
 
         PreSearchResponse preSearchResponse  = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(qwepApiFactory.makeSearchEndpoint()::preSearch, request));
 
