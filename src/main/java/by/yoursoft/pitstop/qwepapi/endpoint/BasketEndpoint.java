@@ -6,8 +6,10 @@ import by.yoursoft.pitstop.qwepapi.request.basket.change.ChangeBasketItemRequest
 import by.yoursoft.pitstop.qwepapi.request.basket.clear.ClearBasketRequest;
 import by.yoursoft.pitstop.qwepapi.request.basket.delete.DeleteFromBasketRequest;
 import by.yoursoft.pitstop.qwepapi.request.basket.list.BasketListRequest;
+import by.yoursoft.pitstop.qwepapi.request.basket.order.BasketOrderRequest;
 import by.yoursoft.pitstop.qwepapi.response.basket.add.BasketAddResponse;
 import by.yoursoft.pitstop.qwepapi.response.basket.list.BasketListResponse;
+import by.yoursoft.pitstop.qwepapi.response.basket.order.BasketOrderResponse;
 import by.yoursoft.pitstop.qwepapi.response.common.StatusResponse;
 import by.yoursoft.pitstop.qwepapi.utils.HttpUtils;
 import retrofit2.Call;
@@ -20,9 +22,11 @@ import java.io.IOException;
 import java.util.Map;
 
 public class BasketEndpoint extends AbstractEndpoint {
-    public BasketEndpoint (QwepApiFactory factory) {super(factory); }
+    public BasketEndpoint(QwepApiFactory factory) {
+        super(factory);
+    }
 
-    private interface BasketService{
+    private interface BasketService {
         @POST("/cart/add")
         Call<BasketAddResponse> addBasket(@HeaderMap Map<String, String> headers, @Body BasketAddRequest body);
 
@@ -37,6 +41,9 @@ public class BasketEndpoint extends AbstractEndpoint {
 
         @POST("/basket/changeItem")
         Call<BasketListResponse> changeItem(@HeaderMap Map<String, String> headers, @Body ChangeBasketItemRequest body);
+
+        @POST("/basket/order")
+        Call<BasketOrderResponse> addOrder(@HeaderMap Map<String, String> headers, @Body BasketOrderRequest body);
     }
 
     public Response<BasketAddResponse> addBasket(BasketAddRequest request) throws IOException {
@@ -45,7 +52,7 @@ public class BasketEndpoint extends AbstractEndpoint {
         return service.addBasket(HttpUtils.makeAuthHeader(getToken()), request).execute();
     }
 
-    public Response<BasketListResponse> getBasket(BasketListRequest request) throws IOException{
+    public Response<BasketListResponse> getBasket(BasketListRequest request) throws IOException {
         BasketService service = getFactory().getHttpClient().create(BasketService.class);
 
         return service.getBasket(HttpUtils.makeAuthHeader(getToken()), request).execute();
@@ -67,5 +74,12 @@ public class BasketEndpoint extends AbstractEndpoint {
         BasketService service = getFactory().getHttpClient().create(BasketService.class);
 
         return service.changeItem(HttpUtils.makeAuthHeader(getToken()), request).execute();
+    }
+
+    public Response<BasketOrderResponse> addOrder(BasketOrderRequest request) throws IOException {
+        BasketService service = getFactory().getHttpClient().create(BasketService.class);
+
+        return service.addOrder(HttpUtils.makeAuthHeader(getToken()), request).execute();
+
     }
 }

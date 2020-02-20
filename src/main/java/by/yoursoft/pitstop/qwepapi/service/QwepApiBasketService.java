@@ -11,10 +11,14 @@ import by.yoursoft.pitstop.qwepapi.request.basket.delete.DeleteFromBasketRequest
 import by.yoursoft.pitstop.qwepapi.request.basket.delete.DeleteFromBasketRequestBody;
 import by.yoursoft.pitstop.qwepapi.request.basket.list.BasketListRequest;
 import by.yoursoft.pitstop.qwepapi.request.basket.list.BasketListRequestBody;
+import by.yoursoft.pitstop.qwepapi.request.basket.order.BasketOrderRequest;
+import by.yoursoft.pitstop.qwepapi.request.basket.order.BasketOrderRequestBody;
 import by.yoursoft.pitstop.qwepapi.response.basket.add.BasketAddResponse;
 import by.yoursoft.pitstop.qwepapi.response.basket.add.BasketAddResponseBody;
+import by.yoursoft.pitstop.qwepapi.response.basket.list.BasketFormFields;
 import by.yoursoft.pitstop.qwepapi.response.basket.list.BasketItemList;
 import by.yoursoft.pitstop.qwepapi.response.basket.list.BasketListResponse;
+import by.yoursoft.pitstop.qwepapi.response.basket.order.BasketOrderResponse;
 import by.yoursoft.pitstop.qwepapi.response.common.StatusResponse;
 import by.yoursoft.pitstop.qwepapi.utils.RequestUtils;
 
@@ -79,6 +83,18 @@ public class QwepApiBasketService extends AbstractQwepApiService {
                 .setQuantity(quantity));
 
         BasketListResponse response = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(getQwepApiFactory().makeBasketEndpoint()::changeBasketItem, request));
+
+        return response.getEntity().getBaskets();
+    }
+
+    public List<BasketItemList> addOrder(Long accountId, Long formId, List<BasketFormFields> fieldValues) {
+        BasketOrderRequest request = new BasketOrderRequest();
+        request.setRequestBody(new BasketOrderRequestBody()
+                .setAccountId(accountId)
+                .setFormId(formId)
+                .setFields(fieldValues));
+
+        BasketOrderResponse response = executeWithRefreshTokenIfNeed(() -> RequestUtils.execute(getQwepApiFactory().makeBasketEndpoint()::addOrder, request));
 
         return response.getEntity().getBaskets();
     }
