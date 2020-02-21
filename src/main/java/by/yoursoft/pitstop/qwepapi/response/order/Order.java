@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Orders {
+public class Order {
     private String number;
     private LocalDateTime datetime;
     private String status;

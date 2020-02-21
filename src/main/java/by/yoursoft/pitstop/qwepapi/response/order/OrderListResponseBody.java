@@ -9,5 +9,5 @@ import java.util.List;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OrderListResponseBody {
-    private List<Orders> orders = new LinkedList<>();
+    private List<Order> orders = new LinkedList<>();
 }
