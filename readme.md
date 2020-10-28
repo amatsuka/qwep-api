@@ -24,10 +24,10 @@
 Пример использования API
 
          String baseUrl = "http://userapi.qwep.ru";
-         String apiKey = "F3F6FC0D38B8AFDCB888";
+         String apiKey = "sample_api_key";
          String applicationNum = "1";
  
-         String token = "2338cff301f54753364a88697573ced1e1698ca6";
+         String token = "sample_access_token";
  
          BaseQwepFactoryConfig baseQwepFactoryConfig = new BaseQwepFactoryConfig();
          baseQwepFactoryConfig
